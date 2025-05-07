@@ -105,8 +105,10 @@ with tabs[3]:
 with tabs[4]:
     with stylable_container("global", css_styles="padding: 1rem; background-color:#fefefe; border-radius:8px"):
         st.header("🌐 Global Average vs Specific Country")
-        global_avg = filtered_df["Ladder Score"].mean()
-        st.metric("🌎 Global Avg Ladder Score", f"{round(global_avg,2)}")
+        selected_countries = st.multiselect("Countries", countries, default=["Finland", "India"])
+        compare_metric = st.selectbox("Compare Metric", df.columns[3:-1])
+        global_avg = filtered_df[compare_metric].mean()
+        st.metric("🌎 Global Avg "+compare_metric , f"{round(global_avg,2)}")
         fig_global = px.bar(filtered_df, x='Country', y='Ladder Score', color='Country')
         fig_global.add_hline(y=global_avg, line_dash="dot", annotation_text="Global Avg", line_color="red")
         st.plotly_chart(fig_global, use_container_width=True)
