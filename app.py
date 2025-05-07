@@ -62,7 +62,9 @@ with tabs[0]:
 
 with tabs[1]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
-        st.header(f"🗺️ {map_metric} Across Countries in {selected_year}")
+          st.subheader("🗺️ Global Happiness Map")
+        st.markdown(f"**Happiness Ranking - {selected_year}**")
+
         fig_map = px.choropleth(
             filtered_df,
             locations="Country",
@@ -71,6 +73,13 @@ with tabs[1]:
             hover_name="Country",
             color_continuous_scale="Turbo"
         )
+        fig_map.update_geos(
+            showocean=True,
+            oceancolor="LightBlue",
+            landcolor="white",
+            projection_type="natural earth"
+        )
+        fig_map.update_layout(margin=dict(l=0, r=0, t=0, b=0))
         st.plotly_chart(fig_map, use_container_width=True)
 
 with tabs[2]:
