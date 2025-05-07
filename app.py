@@ -43,7 +43,6 @@ tabs = st.tabs([
     "📌 How is Happiness Measured?",
     "🗺️ Map View",
     "📊 Compare Countries",
-    "📈 Metric Correlation",
     "📉 Time Shifts",
     "🏆 Top vs Bottom",
     "🌐 Global Avg Context"
