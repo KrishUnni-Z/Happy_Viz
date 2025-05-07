@@ -26,7 +26,7 @@ def load_data():
 
 df = load_data()
 countries = df["Country"].unique().tolist()
-years = sorted(df["Year"].unique())
+years = sorted(df["Year"].dropna().astype(int).unique())
 
 # ---------- TABS ----------
 tabs = st.tabs([
@@ -40,11 +40,39 @@ tabs = st.tabs([
 with tabs[0]:
     with stylable_container("story-intro", css_styles="padding: 1rem; background-color:#f0f4f8; border-radius:8px"):
         st.header("📌 How is Happiness Measured?")
-        st.write("The **Ladder Score** represents life evaluation by respondents, influenced by GDP per capita, social support, life expectancy, freedom, generosity, and perceived corruption.")
+        st.markdown("""
+        The **World Happiness Report** collects data from respondents in over **160 countries and territories**, covering more than **98% of the world’s adult population**.
+
+        The **happiness scores** (`ladder`) are central values with upper and lower bounds, calculated from several key factors:
+        """)
+
+        st.subheader("📊 Key Factors in Happiness Scores")
+
+        st.markdown("""
+        - **GDP per capita**: Indicates purchasing power parity (PPP) at constant 2021 international dollar prices (from *World Development Indicators*).
+        - **Social support**: Based on responses to the question:  
+          *“If you were in trouble, do you have relatives or friends you can count on to help you whenever you need them, or not?”*
+        - **Healthy life expectancy**: Data extracted from the **World Health Organization (WHO)** Global Health Observatory.
+        - **Freedom to make life choices**: Based on responses to:  
+          *“Are you satisfied or dissatisfied with your freedom to choose what you do with your life?”*
+        - **Generosity**: Calculated as the residual from regressing national averages of the question:  
+          *“Have you donated money to a charity in the past month?”* on GDP per capita.
+        - **Perceptions of corruption**: National average of responses to two questions:  
+          1. *“Is corruption widespread throughout the government or not?”*  
+          2. *“Is corruption widespread within businesses or not?”*
+        - **Dystopia and residual**: Capture the baseline and unexplained variations in national happiness levels.
+        """)
+
+        st.subheader("📚 Source")
+
+        st.markdown("""
+        - [The World Happiness Report](https://worldhappiness.report/data-sharing/)
+        """)
 
 with tabs[1]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
-        selected_year = st.slider("Select Year", min(years), max(years), value=max(years))
+        # selected_year = st.slider("Select Year", min(years), max(years), value=max(years))
+        selected_year = st.selectbox("Select Year", years, index=len(years) - 1, key="selected_year")
         map_metric = st.selectbox("Metric to show on map", ["Ladder Score", "Log GDP per capita"])
         filtered_df = df[df["Year"] == selected_year]
 
@@ -80,8 +108,10 @@ with tabs[2]:
 
         st.header("📈 Metric Correlation")
         year_corr = st.selectbox("Select Year", years, index=len(years)-1, key="year_corr")
-        x_metric = st.selectbox("X Axis", df.columns[3:-1], index=0, key="x_metric")
-        y_metric = st.selectbox("Y Axis", df.columns[3:-1], index=1, key="y_metric")
+        x_metric = st.selectbox("X Axis", df.columns[3:-1], index=df.columns[3:-1].tolist().index("Log GDP per capita")
+            , key="x_metric")
+        y_metric = st.selectbox("Y Axis", df.columns[3:-1], index=df.columns[3:-1].tolist().index("Ladder Score")
+            , key="y_metric")
         corr_df = df[df["Year"] == year_corr]
 
         if "All Countries" not in selected_countries:
