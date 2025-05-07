@@ -9,7 +9,6 @@ st.title("🌍 World Happiness Explorer")
 
 # ---------- LOAD DATA ----------
 @st.cache_data
-
 def load_data():
     df = pd.read_csv("happinessreport.csv")
     df.rename(columns={
@@ -34,6 +33,7 @@ tabs = st.tabs([
     "📌 How is Happiness Measured?",
     "🗺️ Map View",
     "📊 Compare Countries",
+    "📈 Metric Correlation",
     "🏆 Top vs Bottom",
     "🌐 Global Avg Context"
 ])
@@ -46,7 +46,7 @@ with tabs[0]:
 with tabs[1]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
         selected_year = st.slider("Select Year", min(years), max(years), value=max(years))
-        map_metric = st.selectbox("Metric to show on map", ["Rank", "Log GDP per capita"])
+        map_metric = st.selectbox("Metric to show on map", ["Ladder Score", "Log GDP per capita"])
         filtered_df = df[df["Year"] == selected_year]
 
         st.subheader("🗺️ Global Happiness Map")
@@ -68,19 +68,24 @@ with tabs[2]:
     with stylable_container("comparison", css_styles="padding: 1rem; background-color:#fff8f2; border-radius:8px"):
         st.header("📊 Compare Countries Over Time")
         selected_countries = st.multiselect("Countries", countries, default=["Finland", "India"])
-        compare_metric = st.selectbox("Compare Metric", df.columns[3:-1])
+        compare_metric = st.selectbox("Compare Metric", df.columns[3:-1], key="compare_metric")
         comp_df = df[df["Country"].isin(selected_countries)]
 
         fig_line = px.line(comp_df, x="Year", y=compare_metric, color="Country", markers=True)
         st.plotly_chart(fig_line, use_container_width=True)
 
+with tabs[3]:
+    with stylable_container("correlation", css_styles="padding: 1rem; background-color:#e8f9f1; border-radius:8px"):
         st.header("📈 Metric Correlation")
+        year_corr = st.selectbox("Select Year", years, index=len(years)-1, key="year_corr")
         x_metric = st.selectbox("X Axis", df.columns[3:-1], index=0)
         y_metric = st.selectbox("Y Axis", df.columns[3:-1], index=1)
-        fig_corr = px.scatter(filtered_df, x=x_metric, y=y_metric, size='Ladder Score', color='Country')
+        corr_df = df[df["Year"] == year_corr]
+
+        fig_corr = px.scatter(corr_df, x=x_metric, y=y_metric, size='Ladder Score', color='Country')
         st.plotly_chart(fig_corr, use_container_width=True)
 
-with tabs[3]:
+with tabs[4]:
     with stylable_container("top-bottom", css_styles="padding: 1rem; background-color:#fef3f7; border-radius:8px"):
         st.header("🏆 Top vs Bottom 5 in Happiness Rank")
         top5 = filtered_df.nsmallest(5, 'Ladder Score')
@@ -88,7 +93,7 @@ with tabs[3]:
         fig_bar = px.bar(pd.concat([top5, bottom5]), x='Country', y='Ladder Score', color='Ladder Score')
         st.plotly_chart(fig_bar, use_container_width=True)
 
-with tabs[4]:
+with tabs[5]:
     with stylable_container("global", css_styles="padding: 1rem; background-color:#fefefe; border-radius:8px"):
         st.header("🌐 Global Average vs Specific Country")
         selected_countries = st.multiselect("Select Countries", countries, default=["Finland", "India"], key="global_countries")
