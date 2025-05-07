@@ -38,12 +38,6 @@ df = pd.DataFrame(data)
 st.set_page_config(layout="wide")
 st.title("🌍 World Happiness Explorer (Dummy Data)")
 
-# Inputs
-selected_year = st.slider("Select Year", min(years), max(years), value=2021)
-map_metric = st.selectbox("Metric to show on map", ['Ladder Score', 'Log GDP per capita'])
-
-filtered_df = df[df['Year'] == selected_year]
-
 # Tabs for visual story
 tabs = st.tabs([
     "📌 How is Happiness Measured?",
@@ -62,6 +56,11 @@ with tabs[0]:
 
 with tabs[1]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
+          # Inputs
+          selected_year = st.slider("Select Year", min(years), max(years), value=2021)
+          map_metric = st.selectbox("Metric to show on map", ['Ladder Score', 'Log GDP per capita'])
+        
+          filtered_df = df[df['Year'] == selected_year]
           st.subheader("🗺️ Global Happiness Map")
           st.markdown(f"**Happiness Ranking - {selected_year}**")
 
