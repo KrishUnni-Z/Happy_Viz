@@ -46,7 +46,7 @@ with tabs[0]:
 with tabs[1]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
         selected_year = st.slider("Select Year", min(years), max(years), value=max(years))
-        map_metric = st.selectbox("Metric to show on map", ["Ladder Score", "Log GDP per capita"])
+        map_metric = st.selectbox("Metric to show on map", ["Rank", "Log GDP per capita"])
         filtered_df = df[df["Year"] == selected_year]
 
         st.subheader("🗺️ Global Happiness Map")
