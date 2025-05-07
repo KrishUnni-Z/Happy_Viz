@@ -43,7 +43,6 @@ tabs = st.tabs([
     "📌 How is Happiness Measured?",
     "🗺️ Map View",
     "📊 Compare Countries",
-    "📉 Time Shifts",
     "🏆 Top vs Bottom",
     "🌐 Global Avg Context"
 ])
@@ -96,13 +95,6 @@ with tabs[2]:
         st.plotly_chart(fig_corr, use_container_width=True)
 
 with tabs[3]:
-    with stylable_container("trend", css_styles="padding: 1rem; background-color:#eafaf1; border-radius:8px"):
-        st.header("📉 Time-Based Shifts")
-        metric = st.selectbox("Select Metric to Track Over Years", df.columns[3:-1])
-        fig_trend = px.line(df, x='Year', y=metric, color='Country')
-        st.plotly_chart(fig_trend, use_container_width=True)
-
-with tabs[4]:
     with stylable_container("top-bottom", css_styles="padding: 1rem; background-color:#fef3f7; border-radius:8px"):
         st.header("🏆 Top vs Bottom 5 in Happiness Rank")
         top5 = filtered_df.nsmallest(5, 'Rank')
@@ -110,7 +102,7 @@ with tabs[4]:
         fig_bar = px.bar(pd.concat([top5, bottom5]), x='Country', y='Ladder Score', color='Rank')
         st.plotly_chart(fig_bar, use_container_width=True)
 
-with tabs[5]:
+with tabs[4]:
     with stylable_container("global", css_styles="padding: 1rem; background-color:#fefefe; border-radius:8px"):
         st.header("🌐 Global Average vs Specific Country")
         global_avg = filtered_df["Ladder Score"].mean()
