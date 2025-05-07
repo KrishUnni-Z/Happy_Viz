@@ -105,10 +105,28 @@ with tabs[3]:
 with tabs[4]:
     with stylable_container("global", css_styles="padding: 1rem; background-color:#fefefe; border-radius:8px"):
         st.header("🌐 Global Average vs Specific Country")
-        selected_countries = st.multiselect("Countries", countries, default=["Finland", "India"])
-        compare_metric = st.selectbox("Compare Metric", df.columns[3:-1])
+
+        selected_countries = st.multiselect("Select Countries", countries, default=["Finland", "India"], key="global_countries")
+        compare_metric = st.selectbox("Compare Metric", df.columns[3:-1], index=0, key="global_metric")
+
+        filtered_countries_df = filtered_df[filtered_df["Country"].isin(selected_countries)]
         global_avg = filtered_df[compare_metric].mean()
-        st.metric("🌎 Global Avg "+compare_metric , f"{round(global_avg,2)}")
-        fig_global = px.bar(filtered_df, x='Country', y='Ladder Score', color='Country')
-        fig_global.add_hline(y=global_avg, line_dash="dot", annotation_text="Global Avg", line_color="red")
+
+        st.metric(f"Global Avg {compare_metric}", f"{round(global_avg, 2)}")
+
+        fig_global = px.bar(
+            filtered_countries_df,
+            x='Country',
+            y=compare_metric,
+            color='Country',
+            title=f"{compare_metric} vs Global Average"
+        )
+        fig_global.add_hline(
+            y=global_avg,
+            line_dash="dot",
+            annotation_text="Global Avg",
+            line_color="red"
+        )
+
         st.plotly_chart(fig_global, use_container_width=True)
+
