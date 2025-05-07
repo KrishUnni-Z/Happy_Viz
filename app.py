@@ -66,10 +66,15 @@ with tabs[1]:
 with tabs[2]:
     with stylable_container("comparison", css_styles="padding: 1rem; background-color:#fff8f2; border-radius:8px"):
         st.header("📊 Compare Countries Over Time")
-        selected_countries = st.multiselect("Countries", countries, default=["Finland", "India"])
-        compare_metric = st.selectbox("Compare Metric", df.columns[3:-1], key="compare_metric")
-        comp_df = df[df["Country"].isin(selected_countries)]
+        country_options = ["All Countries"] + countries
+        selected_countries = st.multiselect("Countries", country_options, default=["Finland", "India"])
 
+        if "All Countries" in selected_countries:
+            comp_df = df.copy()
+        else:
+            comp_df = df[df["Country"].isin(selected_countries)]
+
+        compare_metric = st.selectbox("Compare Metric", df.columns[3:-1], key="compare_metric")
         fig_line = px.line(comp_df, x="Year", y=compare_metric, color="Country", markers=True)
         st.plotly_chart(fig_line, use_container_width=True)
 
@@ -78,6 +83,9 @@ with tabs[2]:
         x_metric = st.selectbox("X Axis", df.columns[3:-1], index=0, key="x_metric")
         y_metric = st.selectbox("Y Axis", df.columns[3:-1], index=1, key="y_metric")
         corr_df = df[df["Year"] == year_corr]
+
+        if "All Countries" not in selected_countries:
+            corr_df = corr_df[corr_df["Country"].isin(selected_countries)]
 
         fig_corr = px.scatter(corr_df, x=x_metric, y=y_metric, size='Ladder Score', color='Country')
         st.plotly_chart(fig_corr, use_container_width=True)
