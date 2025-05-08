@@ -13,8 +13,8 @@ def set_background():
         f"""
         <style>
         .stApp {{
-            background-image: url("https://yt3.googleusercontent.com/Yu1BqxGOFS9QvKyZ2xqka5DNoiRLYBfJXI18D0Vop6IOFK3nCyMne8RYBuFVV4i4gtkTkJa3Bg=s900-c-k-c0x00ffffff-no-rj");
-            background-size: 200px 100px;
+            background-image: url("https://blogs.flinders.edu.au/student-health-and-well-being/wp-content/uploads/sites/71/2025/03/world-happiness-report.jpg");
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
