@@ -5,7 +5,43 @@ from streamlit_extras.stylable_container import stylable_container
 
 # ---------- CONFIG ----------
 st.set_page_config(layout="wide", page_title="World Happiness Explorer", page_icon="😊")
+
 st.title("🌍 World Happiness Explorer")
+
+csv = filtered_df.to_csv(index=False).encode('utf-8')
+st.download_button(
+    label="Download data as CSV",
+    data=csv,
+    file_name='filtered_data.csv',
+    mime='text/csv',
+)
+
+theme = st.selectbox("Choose Theme", ["Light", "Dark"])
+if theme == "Dark":
+    st.markdown(
+        """
+        <style>
+        .stApp {
+            background-color: #0e1117;
+            color: white;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+else:
+    st.markdown(
+        """
+        <style>
+        .stApp {
+            background-color: white;
+            color: black;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
 
 # ---------- LOAD DATA ----------
 @st.cache_data
@@ -57,11 +93,12 @@ with tabs[1]:
             hover_name="Country",
             animation_frame="Year",
             hover_data={
-        "Rank": True,
-        "Year": True,
-        "Rank change YOY": True,
+        "Log GDP per capita": True,
+        "Social support": True,
         "Healthy life expectancy": True,
-        "Freedom to make life choices": True
+        "Freedom to make life choices": True,
+        "Generosity": True,
+        "Perceptions of corruption": True
     },
             color_continuous_scale="Turbo"
         )
