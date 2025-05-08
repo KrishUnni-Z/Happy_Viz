@@ -32,7 +32,7 @@ def set_background():
         /* Push content above overlay */
         [data-testid="stAppViewContainer"] {{
             position: relative;
-            z-index: 1;
+            z-index: 0;
         }}
         </style>
         """,
