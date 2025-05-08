@@ -28,15 +28,14 @@ def load_data():
 
 df = load_data()
 countries = df["Country"].unique().tolist()
-years = int(sorted(df["Year"].unique()))
+years = sorted(df["Year"].unique())
 
 # ---------- TABS ----------
 tabs = st.tabs([
     "📌 How is Happiness Measured?",
     "🗺️ Map View",
     "📊 Compare Countries",
-    "🌐 Global Avg Context",
-    "testing"
+    "🌐 Global Avg Context"
 ])
 
 with tabs[0]:
@@ -47,7 +46,7 @@ with tabs[0]:
 with tabs[1]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
         selected_year = st.slider("Select Year", min(years), max(years), value=max(years))
-        map_metric = st.selectbox("Metric to show on map", ["Ladder Score", "Log GDP per capita"])
+        map_metric = st.selectbox("Metric to show on map", ["Ladder Score", "RANK", "Log GDP per capita", "Social support", "Healthy life expectancy", "Freedom to make life choices", "Generosity", "Perceptions of corruption", "Dystopia + residual"])
         filtered_df = df[df["Year"] == selected_year]
 
         st.subheader("🗺️ Global Happiness Map")
@@ -57,7 +56,6 @@ with tabs[1]:
             locationmode="country names",
             color=map_metric,
             hover_name="Country",
-            animation_frame="Year",
             hover_data={
         "RANK": True,
         "Rank change YOY": True
@@ -74,7 +72,7 @@ with tabs[2]:
     with stylable_container("comparison", css_styles="padding: 1rem; background-color:#fff8f2; border-radius:8px"):
         st.header("📊 Compare Countries Over Time")
         country_options = ["All Countries"] + countries
-        selected_countries = st.multiselect("Countries", country_options, default=["Finland", "India"])
+        selected_countries = st.multiselect("Countries", country_options, default=["Australia", "Finland", "Spain", "India", "Thailand", "Japan"])
 
         if "All Countries" in selected_countries:
             comp_df = df.copy()
@@ -122,55 +120,3 @@ with tabs[3]:
             line_color="red"
         )
         st.plotly_chart(fig_global, use_container_width=True)
-
-with tabs[4]:
-    with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
-        st.subheader("🗺️ Global Happiness Map")
-
-        map_metric = st.selectbox("Metric to show on map", ["Ladder Score", "Log GDP per capita"])
-        df = df[df["Year"].notna()]
-        df["Year"] = df["Year"].astype(int)
-
-        fig_map = px.choropleth(
-            df,
-            locations="Country",
-            locationmode="country names",
-            color=map_metric,
-            hover_name="Country",
-            animation_frame="Year",
-            hover_data={
-                "Country": True,
-                "Ladder Score": True,
-                "Log GDP per capita": True
-            },
-            color_continuous_scale="Turbo"
-        )
-        fig_map.update_geos(
-            showocean=True, oceancolor="LightBlue", landcolor="white", projection_type="natural earth"
-        )
-        fig_map.update_layout(
-            margin=dict(l=0, r=0, t=0, b=0),
-            updatemenus=[{
-                "buttons": [
-                    {
-                        "args": [None, {"frame": {"duration": 1000, "redraw": True}, "fromcurrent": True}],
-                        "label": "▶️ Play",
-                        "method": "animate"
-                    },
-                    {
-                        "args": [[None], {"frame": {"duration": 0, "redraw": False}, "mode": "immediate"}],
-                        "label": "⏸️ Pause",
-                        "method": "animate"
-                    }
-                ],
-                "direction": "left",
-                "pad": {"r": 10, "t": 87},
-                "showactive": False,
-                "type": "buttons",
-                "x": 0.1,
-                "xanchor": "right",
-                "y": 0,
-                "yanchor": "top"
-            }]
-        )
-        st.plotly_chart(fig_map, use_container_width=True)
