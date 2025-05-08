@@ -8,32 +8,6 @@ st.set_page_config(layout="wide", page_title="World Happiness Explorer", page_ic
 
 st.title("🌍 World Happiness Explorer")
 
-theme = st.selectbox("Choose Theme", ["Light", "Dark"])
-if theme == "Dark":
-    st.markdown(
-        """
-        <style>
-        .stApp {
-            background-color: #0e1117;
-            color: white;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-else:
-    st.markdown(
-        """
-        <style>
-        .stApp {
-            background-color: white;
-            color: black;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
 
 # ---------- LOAD DATA ----------
 @st.cache_data
@@ -53,6 +27,7 @@ def load_data():
     return df
 
 df = load_data()
+df["Year"] == df["Year"].astype(int)
 countries = df["Country"].unique().tolist()
 years = sorted(df["Year"].unique())
 
@@ -61,8 +36,8 @@ tabs = st.tabs([
     "📌 How is Happiness Measured?",
     "🗺️ Map View",
     "📊 Compare Countries",
-    "🏆 Top vs Bottom",
-    "🌐 Global Avg Context"
+    "🌐 Global Avg Context",
+    "testing"
 ])
 
 with tabs[0]:
@@ -85,12 +60,8 @@ with tabs[1]:
             hover_name="Country",
             animation_frame="Year",
             hover_data={
-        "Log GDP per capita": True,
-        "Social support": True,
-        "Healthy life expectancy": True,
-        "Freedom to make life choices": True,
-        "Generosity": True,
-        "Perceptions of corruption": True
+        "RANK": True,
+        "Rank change YOY": True
     },
             color_continuous_scale="Turbo"
         )
@@ -127,15 +98,8 @@ with tabs[2]:
         fig_corr = px.scatter(corr_df, x=x_metric, y=y_metric, size='Ladder Score', color='Country')
         st.plotly_chart(fig_corr, use_container_width=True)
 
-with tabs[3]:
-    with stylable_container("top-bottom", css_styles="padding: 1rem; background-color:#fef3f7; border-radius:8px"):
-        st.header("🏆 Top vs Bottom 5 in Happiness Rank")
-        top5 = filtered_df.nsmallest(5, 'Ladder Score')
-        bottom5 = filtered_df.nlargest(5, 'Ladder Score')
-        fig_bar = px.bar(pd.concat([top5, bottom5]), x='Country', y='Ladder Score', color='Ladder Score')
-        st.plotly_chart(fig_bar, use_container_width=True)
 
-with tabs[4]:
+with tabs[3]:
     with stylable_container("global", css_styles="padding: 1rem; background-color:#fefefe; border-radius:8px"):
         st.header("🌐 Global Average vs Specific Country")
         selected_countries = st.multiselect("Select Countries", countries, default=["Finland", "India"], key="global_countries")
@@ -159,3 +123,53 @@ with tabs[4]:
             line_color="red"
         )
         st.plotly_chart(fig_global, use_container_width=True)
+
+with tabs[4]:
+    with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
+        st.subheader("🗺️ Global Happiness Map")
+        df["Year"] = df["Year"].astype(str)
+
+        map_metric = st.selectbox("Metric to show on map", ["Ladder Score", "Log GDP per capita"])
+        fig_map = px.choropleth(
+            df,
+            locations="Country",
+            locationmode="country names",
+            color=map_metric,
+            hover_name="Country",
+            animation_frame="Year",
+            hover_data={
+                "Country": True,
+                "Ladder Score": True,
+                "Log GDP per capita": True
+            },
+            color_continuous_scale="Turbo"
+        )
+        fig_map.update_geos(
+            showocean=True, oceancolor="LightBlue", landcolor="white", projection_type="natural earth"
+        )
+        fig_map.update_layout(
+            margin=dict(l=0, r=0, t=0, b=0),
+            updatemenus=[{
+                "buttons": [
+                    {
+                        "args": [None, {"frame": {"duration": 1000, "redraw": True}, "fromcurrent": True}],
+                        "label": "▶️ Play",
+                        "method": "animate"
+                    },
+                    {
+                        "args": [[None], {"frame": {"duration": 0, "redraw": False}, "mode": "immediate"}],
+                        "label": "⏸️ Pause",
+                        "method": "animate"
+                    }
+                ],
+                "direction": "left",
+                "pad": {"r": 10, "t": 87},
+                "showactive": False,
+                "type": "buttons",
+                "x": 0.1,
+                "xanchor": "right",
+                "y": 0,
+                "yanchor": "top"
+            }]
+        )
+        st.plotly_chart(fig_map, use_container_width=True)
