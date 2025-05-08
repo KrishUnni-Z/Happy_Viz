@@ -13,7 +13,7 @@ def set_background():
         f"""
         <style>
         .stApp {{
-            background-image: url("https://data.worldhappiness.report/images/whr-wordmark-1c-white.svg");
+            background-image: url("https://pbs.twimg.com/media/Ew3sqRdWgAIahyz?format=jpg&name=medium");
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
