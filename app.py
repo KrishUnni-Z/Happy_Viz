@@ -91,8 +91,8 @@ with tabs[2]:
 
         st.header("📈 Metric Correlation")
         year_corr = st.selectbox("Select Year", years, index=len(years)-1, key="year_corr")
-        x_metric = st.selectbox("X Axis", df.columns[3:-1], index=0, key="x_metric")
-        y_metric = st.selectbox("Y Axis", df.columns[3:-1], index=1, key="y_metric")
+        x_metric = st.selectbox("X Axis", metrics, index=0, key="x_metric")
+        y_metric = st.selectbox("Y Axis", metrics, index=1, key="y_metric")
         corr_df = df[df["Year"] == year_corr]
 
         if "All Countries" not in selected_countries:
