@@ -13,16 +13,32 @@ def set_background():
         f"""
         <style>
         .stApp {{
-            background-image: url("https://blogs.flinders.edu.au/student-health-and-well-being/wp-content/uploads/sites/71/2025/03/world-happiness-report.jpg");
+            background-image: url("https://images.squarespace-cdn.com/content/v1/656bf2e501bf733c04fad6f5/9eac6af8-122d-4c06-a06a-360982bebb75/Happiness+Report.jpg");
             background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
             background-attachment: fixed;
+            position: relative;
+        }}
+
+        .stApp::before {{
+            content: "";
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(255, 255, 255, 0.6);  /* Light overlay with alpha */
+            z-index: 0;
+        }}
+
+        /* Push content above overlay */
+        [data-testid="stAppViewContainer"] {{
+            position: relative;
+            z-index: 1;
         }}
         </style>
         """,
         unsafe_allow_html=True
     )
+
     
 set_background()
 
