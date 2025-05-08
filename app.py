@@ -25,8 +25,8 @@ def set_background():
             top: 0; left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: rgba(255, 255, 255, 0.2);  /* Light overlay with alpha */
-            z-index: -1;
+            background-color: rgba(255, 255, 255, 0.8);  /* Light overlay with alpha */
+            z-index: 0;
         }}
 
         /* Push content above overlay */
