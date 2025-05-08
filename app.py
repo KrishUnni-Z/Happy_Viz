@@ -13,7 +13,7 @@ def set_background():
         f"""
         <style>
         .stApp {{
-            background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQc57vob6PCzIgwV7JrJ9wmzwnmYUvd6KqPkeDAVnYXW7qX5uDyGrgYc7lYog3ZkolDRa0&usqp=CAU");
+            background-image: url("https://www.loopnews.com/wp-content/uploads/2024/03/istock-happy-sad_a278859f233bb569042db30cffe4f8ab-4.jpg");
             background-size: cover;
             background-attachment: fixed;
             position: relative;
