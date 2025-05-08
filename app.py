@@ -55,6 +55,14 @@ with tabs[1]:
             locationmode="country names",
             color=map_metric,
             hover_name="Country",
+            animation_frame="Year",
+            hover_data={
+        "Rank": True,
+        "Year": True,
+        "Rank change YOY": True,
+        "Healthy life expectancy": True,
+        "Freedom to make life choices": True
+    },
             color_continuous_scale="Turbo"
         )
         fig_map.update_geos(
