@@ -13,7 +13,7 @@ def set_background():
         f"""
         <style>
         .stApp {{
-            background-image: url("https://images.squarespace-cdn.com/content/v1/656bf2e501bf733c04fad6f5/9eac6af8-122d-4c06-a06a-360982bebb75/Happiness+Report.jpg");
+            background-image: url("https://i.pinimg.com/736x/6e/1c/99/6e1c99e10ed46afdf6b31a6cb74f0222.jpg");
             background-size: cover;
             background-attachment: fixed;
             position: relative;
