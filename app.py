@@ -13,7 +13,7 @@ def set_background():
         f"""
         <style>
         .stApp {{
-            background-image: url("https://i.pinimg.com/736x/b4/32/cc/b432ccde9a5d9d86d5252495278663a0.jpg");
+            background-image: url("https://pbs.twimg.com/amplify_video_thumb/1912823252302348288/img/vca_xkSV4TeR7lfb.jpg");
             background-size: cover;
             background-attachment: fixed;
             position: relative;
@@ -70,7 +70,7 @@ metrics = ["Ladder Score", "Log GDP per capita", "Social support", "Healthy life
 tabs = st.tabs([
     "📌 How is Happiness Measured?",
     "🗺️ Map View",
-    "🌐 Country Conparisons",
+    "🌐 Country Comparisons",
     "📊 Conclusions"
 ])
 
