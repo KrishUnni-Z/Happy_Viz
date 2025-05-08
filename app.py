@@ -16,6 +16,7 @@ def set_background():
             background-image: url("https://yt3.googleusercontent.com/Yu1BqxGOFS9QvKyZ2xqka5DNoiRLYBfJXI18D0Vop6IOFK3nCyMne8RYBuFVV4i4gtkTkJa3Bg=s900-c-k-c0x00ffffff-no-rj");
             background-size: 200px 100px;
             background-position: center;
+            background-repeat: no-repeat;
             background-attachment: fixed;
         }}
         </style>
