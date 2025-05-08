@@ -27,9 +27,8 @@ def load_data():
     return df
 
 df = load_data()
-df["Year"] = df["Year"].astype(int)
 countries = df["Country"].unique().tolist()
-years = sorted(df["Year"].unique())
+years = int(sorted(df["Year"].unique()))
 
 # ---------- TABS ----------
 tabs = st.tabs([
@@ -129,6 +128,9 @@ with tabs[4]:
         st.subheader("🗺️ Global Happiness Map")
 
         map_metric = st.selectbox("Metric to show on map", ["Ladder Score", "Log GDP per capita"])
+        df = df[df["Year"].notna()]
+        df["Year"] = df["Year"].astype(int)
+
         fig_map = px.choropleth(
             df,
             locations="Country",
