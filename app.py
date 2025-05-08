@@ -105,7 +105,7 @@ with tabs[1]:
             showocean=True, oceancolor="LightBlue", landcolor="white", projection_type="natural earth"
         )
         fig_map.update_layout(margin=dict(l=0, r=0, t=0, b=0))
-        st.plotly_chart(fig_map, use_container_width=True)
+        st.plotly_chart(fig_map, plot_bgcolor='rgba(0,0,0,0)', use_container_width=True)
 
 with tabs[2]:
     with stylable_container("global", css_styles="padding: 1rem; background-color:#fefefe; border-radius:8px"):
