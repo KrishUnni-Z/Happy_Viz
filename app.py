@@ -14,7 +14,7 @@ def set_background():
         <style>
         .stApp {{
             background-image: url("https://yt3.googleusercontent.com/Yu1BqxGOFS9QvKyZ2xqka5DNoiRLYBfJXI18D0Vop6IOFK3nCyMne8RYBuFVV4i4gtkTkJa3Bg=s900-c-k-c0x00ffffff-no-rj");
-            background-size: contain;
+            background-size: 100px 200;
             background-position: center;
             background-attachment: fixed;
         }}
