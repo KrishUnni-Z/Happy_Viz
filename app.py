@@ -26,13 +26,13 @@ def set_background():
             width: 100vw;
             height: 100vh;
             background-color: rgba(255, 255, 255, 0.65);  /* Light overlay with alpha */
-            z-index: -1;
+            z-index: 1;
         }}
 
         /* Push content above overlay */
         [data-testid="stAppViewContainer"] {{
             position: relative;
-            z-index: 0;
+            z-index: 1;
         }}
         </style>
         """,
