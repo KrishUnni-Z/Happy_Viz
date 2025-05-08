@@ -24,6 +24,7 @@ def load_data():
         "Explained by: Perceptions of corruption": "Perceptions of corruption",
         "Dystopia + residual": "Dystopia + residual"
     }, inplace=True)
+    df['Year'] = df['Year'].astype(int)
     return df
 
 df = load_data()
