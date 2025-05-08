@@ -12,7 +12,7 @@ st.title("🌍 World Happiness Explorer")
 # ---------- LOAD DATA ----------
 @st.cache_data
 def load_data():
-    df = pd.read_csv("happinessreport.csv")
+    df = pd.read_csv("happinessreport_cleaned.csv")
     df.rename(columns={
         "Country name": "Country",
         "Ladder score": "Ladder Score",
@@ -83,7 +83,8 @@ with tabs[2]:
         else:
             comp_df = df[df["Country"].isin(selected_countries)]
 
-        compare_metric = st.selectbox("Compare Metric", df.columns[3:-1], key="compare_metric")
+        compare_metric = st.selectbox("Compare Metric", ["Ladder Score", "Log GDP per capita", "Social support", "Healthy life expectancy",
+             "Freedom to make life choices", "Generosity", "Perceptions of corruption", "Dystopia + residual"], key="compare_metric")
         fig_line = px.line(comp_df, x="Year", y=compare_metric, color="Country", markers=True)
         st.plotly_chart(fig_line, use_container_width=True)
 
