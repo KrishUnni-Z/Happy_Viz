@@ -37,8 +37,8 @@ metrics = ["Ladder Score", "Log GDP per capita", "Social support", "Healthy life
 tabs = st.tabs([
     "📌 How is Happiness Measured?",
     "🗺️ Map View",
-    "📊 Compare Countries",
-    "🌐 Global Avg Context"
+    "🌐 Country Conparisons",
+    "📊 Conclusions"
 ])
 
 with tabs[0]:
@@ -75,6 +75,30 @@ with tabs[1]:
         st.plotly_chart(fig_map, use_container_width=True)
 
 with tabs[2]:
+    with stylable_container("global", css_styles="padding: 1rem; background-color:#fefefe; border-radius:8px"):
+        st.header("🌐 Global Average vs Specific Country")
+        selected_countries = st.multiselect("Select Countries", countries, default=["Australia", "Finland", "Spain", "India", "Thailand", "Japan"], key="global_countries")
+        compare_metric = st.selectbox("Compare Metric", metrics, index=0, key="global_metric")
+
+        filtered_countries_df = filtered_df[filtered_df["Country"].isin(selected_countries)]
+        global_avg = filtered_df[compare_metric].mean()
+
+        st.metric(f"Global Avg {compare_metric}", f"{round(global_avg, 2)}")
+        fig_global = px.bar(
+            filtered_countries_df,
+            x='Country',
+            y=compare_metric,
+            color='Country',
+            title=f"{compare_metric} vs Global Average"
+        )
+        fig_global.add_hline(
+            y=global_avg,
+            line_dash="dot",
+            annotation_text="Global Avg",
+            line_color="red"
+        )
+        st.plotly_chart(fig_global, use_container_width=True)
+
     with stylable_container("comparison", css_styles="padding: 1rem; background-color:#fff8f2; border-radius:8px"):
         st.header("📊 Compare Countries Over Time")
         country_options = ["All Countries"] + countries
@@ -103,26 +127,6 @@ with tabs[2]:
 
 
 with tabs[3]:
-    with stylable_container("global", css_styles="padding: 1rem; background-color:#fefefe; border-radius:8px"):
-        st.header("🌐 Global Average vs Specific Country")
-        selected_countries = st.multiselect("Select Countries", countries, default=["Australia", "Finland", "Spain", "India", "Thailand", "Japan"], key="global_countries")
-        compare_metric = st.selectbox("Compare Metric", metrics, index=0, key="global_metric")
-
-        filtered_countries_df = filtered_df[filtered_df["Country"].isin(selected_countries)]
-        global_avg = filtered_df[compare_metric].mean()
-
-        st.metric(f"Global Avg {compare_metric}", f"{round(global_avg, 2)}")
-        fig_global = px.bar(
-            filtered_countries_df,
-            x='Country',
-            y=compare_metric,
-            color='Country',
-            title=f"{compare_metric} vs Global Average"
-        )
-        fig_global.add_hline(
-            y=global_avg,
-            line_dash="dot",
-            annotation_text="Global Avg",
-            line_color="red"
-        )
-        st.plotly_chart(fig_global, use_container_width=True)
+    with stylable_container("Conclusions", css_styles="padding: 1rem; background-color:#f0f4f8; border-radius:8px"):
+        st.header("📌 Conclusions")
+        st.write("Tobefilled.")
