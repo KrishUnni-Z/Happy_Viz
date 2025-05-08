@@ -106,6 +106,9 @@ with tabs[1]:
         )
         fig_map.update_layout(margin=dict(l=0, r=0, t=0, b=0))
         st.plotly_chart(fig_map, use_container_width=True)
+    
+    # Add footnote
+    st.caption("⚪ Countries shown in white have no data available for the selected year.")
 
 with tabs[2]:
     with stylable_container("global", css_styles="padding: 1rem; background-color:#fefefe; border-radius:8px"):
