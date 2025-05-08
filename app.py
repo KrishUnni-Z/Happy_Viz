@@ -8,6 +8,22 @@ st.set_page_config(layout="wide", page_title="World Happiness Explorer", page_ic
 
 st.title("🌍 World Happiness Explorer")
 
+def set_background():
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url("https://data.worldhappiness.report/images/whr-wordmark-1c-white.svg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+    
+set_background()
 
 # ---------- LOAD DATA ----------
 @st.cache_data
