@@ -30,6 +30,8 @@ def load_data():
 df = load_data()
 countries = df["Country"].unique().tolist()
 years = sorted(df["Year"].unique())
+metrics = ["Ladder Score", "Log GDP per capita", "Social support", "Healthy life expectancy",
+             "Freedom to make life choices", "Generosity", "Perceptions of corruption", "Dystopia + residual"]
 
 # ---------- TABS ----------
 tabs = st.tabs([
@@ -47,13 +49,12 @@ with tabs[0]:
 with tabs[1]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
         selected_year = st.slider("Select Year", min(years), max(years), value=max(years))
-        map_metric = st.selectbox("Metric to show on map", ["Ladder Score", "Log GDP per capita", "Social support", "Healthy life expectancy",
-             "Freedom to make life choices", "Generosity", "Perceptions of corruption", "Dystopia + residual"])
+        map_metric = st.selectbox("Metric to show on map", metrics)
         filtered_df = df[df["Year"] == selected_year]
 
         # Hover details
         hover_cols = ["Country"]
-        for col in ["RANK", "Position Changes YOY"]:
+        for col in ["Rank", "Position Changes YOY"]:
             if col in filtered_df.columns:
                 hover_cols.append(col)
 
@@ -84,8 +85,7 @@ with tabs[2]:
         else:
             comp_df = df[df["Country"].isin(selected_countries)]
 
-        compare_metric = st.selectbox("Compare Metric", ["Ladder Score", "Log GDP per capita", "Social support", "Healthy life expectancy",
-             "Freedom to make life choices", "Generosity", "Perceptions of corruption", "Dystopia + residual"], key="compare_metric")
+        compare_metric = st.selectbox("Compare Metric", metrics, key="compare_metric")
         fig_line = px.line(comp_df, x="Year", y=compare_metric, color="Country", markers=True)
         st.plotly_chart(fig_line, use_container_width=True)
 
@@ -105,8 +105,8 @@ with tabs[2]:
 with tabs[3]:
     with stylable_container("global", css_styles="padding: 1rem; background-color:#fefefe; border-radius:8px"):
         st.header("🌐 Global Average vs Specific Country")
-        selected_countries = st.multiselect("Select Countries", countries, default=["Finland", "India"], key="global_countries")
-        compare_metric = st.selectbox("Compare Metric", df.columns[3:-1], index=0, key="global_metric")
+        selected_countries = st.multiselect("Select Countries", countries, default=["Australia", "Finland", "Spain", "India", "Thailand", "Japan"], key="global_countries")
+        compare_metric = st.selectbox("Compare Metric", metrics, index=0, key="global_metric")
 
         filtered_countries_df = filtered_df[filtered_df["Country"].isin(selected_countries)]
         global_avg = filtered_df[compare_metric].mean()
