@@ -8,14 +8,6 @@ st.set_page_config(layout="wide", page_title="World Happiness Explorer", page_ic
 
 st.title("🌍 World Happiness Explorer")
 
-csv = filtered_df.to_csv(index=False).encode('utf-8')
-st.download_button(
-    label="Download data as CSV",
-    data=csv,
-    file_name='filtered_data.csv',
-    mime='text/csv',
-)
-
 theme = st.selectbox("Choose Theme", ["Light", "Dark"])
 if theme == "Dark":
     st.markdown(
