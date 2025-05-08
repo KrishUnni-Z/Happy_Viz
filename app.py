@@ -46,8 +46,15 @@ with tabs[0]:
 with tabs[1]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
         selected_year = st.slider("Select Year", min(years), max(years), value=max(years))
-        map_metric = st.selectbox("Metric to show on map", ["Ladder Score", "RANK", "Log GDP per capita", "Social support", "Healthy life expectancy", "Freedom to make life choices", "Generosity", "Perceptions of corruption", "Dystopia + residual"])
+        map_metric = st.selectbox("Metric to show on map", ["Ladder Score", "Log GDP per capita", "Social support", "Healthy life expectancy",
+             "Freedom to make life choices", "Generosity", "Perceptions of corruption", "Dystopia + residual"])
         filtered_df = df[df["Year"] == selected_year]
+
+        # Hover details
+        hover_cols = ["Country"]
+        for col in ["RANK", "Position Changes YOY"]:
+            if col in filtered_df.columns:
+                hover_cols.append(col)
 
         st.subheader("🗺️ Global Happiness Map")
         fig_map = px.choropleth(
@@ -56,10 +63,7 @@ with tabs[1]:
             locationmode="country names",
             color=map_metric,
             hover_name="Country",
-            hover_data={
-        "RANK": True,
-        "Rank change YOY": True
-    },
+            hover_data=hover_cols,
             color_continuous_scale="Turbo"
         )
         fig_map.update_geos(
