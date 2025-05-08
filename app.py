@@ -27,7 +27,7 @@ def load_data():
     return df
 
 df = load_data()
-df["Year"] == df["Year"].astype(int)
+df["Year"] = df["Year"].astype(int)
 countries = df["Country"].unique().tolist()
 years = sorted(df["Year"].unique())
 
@@ -127,7 +127,6 @@ with tabs[3]:
 with tabs[4]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
         st.subheader("🗺️ Global Happiness Map")
-        df["Year"] = df["Year"].astype(str)
 
         map_metric = st.selectbox("Metric to show on map", ["Ladder Score", "Log GDP per capita"])
         fig_map = px.choropleth(
