@@ -13,7 +13,7 @@ def set_background():
         f"""
         <style>
         .stApp {{
-            background-image: url("https://i.pinimg.com/736x/6e/1c/99/6e1c99e10ed46afdf6b31a6cb74f0222.jpg");
+            background-image: url("https://i.pinimg.com/736x/b4/32/cc/b432ccde9a5d9d86d5252495278663a0.jpg");
             background-size: cover;
             background-attachment: fixed;
             position: relative;
