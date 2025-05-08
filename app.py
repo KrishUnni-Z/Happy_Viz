@@ -23,8 +23,8 @@ def set_background():
             content: "";
             position: fixed;
             top: 0; left: 0;
-            width: 100vw;
-            height: 100vh;
+            width: 50vw;
+            height: 50vh;
             background-color: rgba(255, 255, 255, 0.8);  /* Light overlay with alpha */
             z-index: 0;
         }}
