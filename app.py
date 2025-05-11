@@ -107,8 +107,8 @@ with tabs[0]:
 
 with tabs[1]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
-        selected_year = st.selectbox("Select Year", years, index=len(years) - 1, key="selected_year")
-        map_metric = st.selectbox("Choose a Happiness Indicator", metrics)
+        selected_year = st.selectbox("📅 Select Year for Map View", years, index=len(years) - 1, key="selected_year")
+        map_metric = st.selectbox("📈 Choose a Happiness Indicator", metrics)
         filtered_df = df[df["Year"] == selected_year]
 
         # Hover details
@@ -176,9 +176,9 @@ with tabs[2]:
 
         st.header("🧭 Explore Correlation Between Indicators")
         year_corr = st.selectbox("📅 Select Year for Correlation View", years, index=len(years)-1, key="year_corr")
-        x_metric = st.selectbox("🔻 X-Axis Indicator", df.columns[3:-1], index=df.columns[3:-1].tolist().index("Log GDP per capita")
+        x_metric = st.selectbox("🔻 X-Axis Indicator", metrics, index=metrics.index("Log GDP per capita")
             , key="x_metric")
-        y_metric = st.selectbox("🔺 Y-Axis Indicator", df.columns[3:-1], index=df.columns[3:-1].tolist().index("Ladder Score")
+        y_metric = st.selectbox("🔺 Y-Axis Indicator", metrics, index=metrics.index("Rank")
             , key="y_metric")
         corr_df = df[df["Year"] == year_corr]
 
