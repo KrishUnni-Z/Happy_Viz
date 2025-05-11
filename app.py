@@ -178,7 +178,7 @@ with tabs[2]:
         year_corr = st.selectbox("📅 Select Year for Correlation View", years, index=len(years)-1, key="year_corr")
         x_metric = st.selectbox("🔻 X-Axis Indicator", metrics, index=metrics.index("Log GDP per capita")
             , key="x_metric")
-        y_metric = st.selectbox("🔺 Y-Axis Indicator", metrics, index=metrics.index("Rank")
+        y_metric = st.selectbox("🔺 Y-Axis Indicator", metrics, index=metrics.index("Social support")
             , key="y_metric")
         corr_df = df[df["Year"] == year_corr]
 
