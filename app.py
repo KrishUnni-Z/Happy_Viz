@@ -138,8 +138,8 @@ with tabs[1]:
 with tabs[2]:
     with stylable_container("global", css_styles="padding: 1rem; background-color:#fefefe; border-radius:8px"):
         st.header("🌐 Global Average vs. Your Chosen Countries")
-        selected_countries = st.multiselect("Countries of Intesest", countries, default=["Australia", "Finland", "United States", "Singapore", "Spain", "India", "Thailand", "Japan"], key="global_countries")
-        compare_metric = st.selectbox("Select a Happiness Indicator to Compare", metrics, index=0, key="global_metric")
+        selected_countries = st.multiselect("🌏 Countries of Intesest", countries, default=["Australia", "Finland", "United States", "Singapore", "Spain", "India", "Thailand", "Japan"], key="global_countries")
+        compare_metric = st.selectbox("📈 Select a Happiness Indicator to Compare", metrics, index=0, key="global_metric")
 
         filtered_countries_df = filtered_df[filtered_df["Country"].isin(selected_countries)]
         global_avg = filtered_df[compare_metric].mean()
@@ -163,7 +163,7 @@ with tabs[2]:
     with stylable_container("comparison", css_styles="padding: 1rem; background-color:#fff8f2; border-radius:8px"):
         st.header("📊 Track Trends Across Countries")
         country_options = ["All Countries"] + countries
-        selected_countries = st.multiselect("Countries of Intesest", country_options, default=["Australia", "Finland", "United States", "Singapore", "Spain", "India", "Thailand", "Japan"])
+        selected_countries = st.multiselect("🌏 Countries of Intesest", country_options, default=["Australia", "Finland", "United States", "Singapore", "Spain", "India", "Thailand", "Japan"])
 
         if "All Countries" in selected_countries:
             comp_df = df.copy()
