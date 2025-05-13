@@ -78,6 +78,7 @@ def set_background():
     """, unsafe_allow_html=True)
 
 
+
 set_background()
 
 def set_viewport_alerts():
