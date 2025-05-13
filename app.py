@@ -201,16 +201,15 @@ with tabs[1]:
 
         st.subheader("🗺️ Visualize Happiness Around the World")
 
-        # -- Animation state tracking --
-        if "play_animation_active" not in st.session_state:
-            st.session_state.play_animation_active = False
+        # Toggle between static and animated view
+        view_mode = st.radio(
+            "🗺️ Select Map Mode",
+            ["Static View (Select Year)", "Animated View (2019–2024)"],
+            horizontal=True
+        )
 
-        if st.button("▶️ Play Yearly Animation (2019–2024)"):
-            st.session_state.play_animation_active = True
-
-        if st.session_state.play_animation_active:
-            map_metric = st.selectbox("📈 Choose Metric to Animate", metrics, index=metrics.index("Rank"), key="animated_metric")
-
+        if view_mode == "Animated View (2019–2024)":
+            map_metric = st.selectbox("📈 Choose Indicator", metrics, index=metrics.index("Rank"), key="animated_metric")
             st.caption("Use the slider below the map to scroll through the years.")
 
             anim_df = df[df["Year"].between(2019, 2024)].sort_values("Year", ascending=False)
@@ -226,34 +225,9 @@ with tabs[1]:
                 animation_frame="Year"
             )
 
-            fig_map.update_geos(
-                projection_type="natural earth",
-                showcoastlines=True,
-                landcolor="white",
-                oceancolor="LightBlue",
-                showocean=True,
-                showframe=False,
-            )
-
-            fig_map.update_layout(
-                margin=dict(l=0, r=0, t=0, b=0),
-                title=None,
-                title_x=0.5
-            )
-
-            st.plotly_chart(fig_map, use_container_width=True)
-
-            # Back button
-            if st.button("🔙 Back to Year View"):
-                st.session_state.play_animation_active = False
-
-
-
         else:
-            selected_year = st.selectbox("📅 Select Year for Map View", years, index=len(years) - 1, key="selected_year")
-            map_metric = st.selectbox("📈 Choose a Happiness Indicator", metrics, key="map_metric")
-
-            st.caption("⚪ White areas indicate countries with no available data.")
+            selected_year = st.selectbox("🗓️ Select Year", years, index=len(years) - 1, key="selected_year")
+            map_metric = st.selectbox("📈 Choose Indicator", metrics, key="map_metric")
 
             filtered_df = df[df["Year"] == selected_year]
             hover_cols = ["Country", map_metric]
@@ -268,24 +242,26 @@ with tabs[1]:
                 color_continuous_scale="Turbo"
             )
 
-            fig_map.update_geos(
-                projection_type="natural earth",
-                showcoastlines=True,
-                landcolor="white",
-                oceancolor="LightBlue",
-                showocean=True,
-                showframe=False,
-            )
+        # Shared layout configuration
+        fig_map.update_geos(
+            projection_type="natural earth",
+            showcoastlines=True,
+            landcolor="white",
+            oceancolor="LightBlue",
+            showocean=True,
+            showframe=False,
+        )
 
-            fig_map.update_layout(
-                title=None,
-                margin=dict(l=0, r=0, t=0, b=0),
-                title_x=0.5
-            )
+        fig_map.update_layout(
+            title=None,
+            margin=dict(l=0, r=0, t=0, b=0),
+            title_x=0.5
+        )
 
-            st.plotly_chart(fig_map, use_container_width=True)
+        st.plotly_chart(fig_map, use_container_width=True)
 
-            # Additional insights
+        # Only show insights for static mode
+        if view_mode == "Static View (Select Year)":
             if st.checkbox("🔍 Show countries performing better than global average"):
                 avg_val = filtered_df[map_metric].mean()
                 if map_metric == "Rank":
