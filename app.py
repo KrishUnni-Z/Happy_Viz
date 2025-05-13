@@ -36,42 +36,34 @@ header, footer, .css-18ni7ap.e8zbici2 {
 def set_background():
     st.markdown("""
     <style>
-    html, body, .stApp {
-        color: #1a1a1a;
+    html, body {
         background-image: url("https://www.loopnews.com/wp-content/uploads/2024/03/istock-happy-sad_a278859f233bb569042db30cffe4f8ab-4.jpg");
         background-size: cover;
-        background-attachment: fixed;
         background-repeat: no-repeat;
         background-position: center top;
-        background-color: white;
+        background-attachment: scroll;
+        background-color: white !important;
+        color-scheme: light !important;
+        overflow-x: hidden;
+        min-height: 100vh;
     }
 
-    .stApp::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(255, 255, 255, 0.85);
-        z-index: 0;
-    }
-
-    [data-testid="stAppViewContainer"] {
-        position: relative;
-        z-index: 1;
+    .stApp {
+        background: transparent !important;
     }
 
     .block-container {
-        position: relative;
-        z-index: 2;
-        background-color: transparent;
+        background-color: rgba(255, 255, 255, 0.85);
         padding: 2rem 1rem;
+        z-index: 1;
+        position: relative;
     }
 
-    section.main > div {
-        padding-top: 0.5rem !important;
-        padding-bottom: 0.5rem !important;
+    [data-testid="stAppViewContainer"] {
+        height: auto !important;
+        overflow: auto !important;
+        position: relative;
+        background: transparent !important;
     }
     </style>
     """, unsafe_allow_html=True)
