@@ -197,18 +197,25 @@ This score is not random. It correlates strongly with several measurable indicat
 
 # ---------- TAB 1 ----------
 with tabs[1]:
+    with tabs[1]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
-        selected_year = st.selectbox("📅 Select Year for Map View", years, index=len(years) - 1, key="selected_year")
-        map_metric = st.selectbox("📈 Choose a Happiness Indicator", metrics)
-
-        if "reset_requested" not in st.session_state:
-            st.session_state.reset_requested = False
 
         st.subheader("🗺️ Visualize Happiness Around the World")
 
-        if st.button("🔄 Reset Map View"):
-            st.session_state.reset_requested = True
-            st.experimental_rerun()
+        # Form to group both selects and reset safely
+        with st.form(key="map_controls_form", clear_on_submit=False):
+            col1, col2, col3 = st.columns([3, 3, 2])
+            with col1:
+                selected_year = st.selectbox("📅 Select Year", years, index=len(years) - 1)
+            with col2:
+                map_metric = st.selectbox("📈 Choose Indicator", metrics)
+            with col3:
+                reset_clicked = st.form_submit_button("🔄 Reset")
+
+        # If reset is clicked, set to defaults
+        if reset_clicked:
+            selected_year = years[-1]
+            map_metric = metrics[0]
 
         st.caption("⚪ White areas indicate countries with no available data.")
 
@@ -218,10 +225,6 @@ with tabs[1]:
             if col in filtered_df.columns:
                 hover_cols.append(col)
 
-        if st.session_state.reset_requested:
-            st.session_state.reset_requested = False
-
-        # 🌍 Globe-style map
         fig_map = px.choropleth(
             filtered_df,
             locations="Country",
@@ -245,9 +248,6 @@ with tabs[1]:
             title_x=0.5
         )
         st.plotly_chart(fig_map, use_container_width=True)
-
-    # Continue with Top 3 / Bottom 3, etc.
-
     
         if st.checkbox("🔍 Show countries performing better than global average"):
             avg_val = filtered_df[map_metric].mean()
