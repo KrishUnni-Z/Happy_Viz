@@ -34,48 +34,55 @@ header, footer, .css-18ni7ap.e8zbici2 {
 
 # ---------- BACKGROUND ----------
 def set_background():
-    st.markdown("""
-    <style>
-    html, body {
-        height: auto !important;
-        min-height: 100vh;
-        background-color: white !important;
-        color-scheme: light !important;
-        color: #1a1a1a !important;
-        overflow-x: hidden;
-        margin: 0;
-        padding: 0;
-    }
+    st.markdown(
+        f"""
+        <style>
+        html, body {
+            height: auto !important;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: white !important;
+            color-scheme: light !important;
+            color: #1a1a1a !important;
+        }
 
-    .stApp {
-        background-image: url("https://www.loopnews.com/wp-content/uploads/2024/03/istock-happy-sad_a278859f233bb569042db30cffe4f8ab-4.jpg");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: scroll;
-        background-position: center top;
-    }
+        .stApp {{
+            background-image: url("https://www.loopnews.com/wp-content/uploads/2024/03/istock-happy-sad_a278859f233bb569042db30cffe4f8ab-4.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-attachment: scroll;
+            min-height: 100vh;
+        }}
 
-    [data-testid="stAppViewContainer"] {
-        background: transparent !important;
-        overflow-y: auto !important;
-        height: auto !important;
-        position: relative !important;
-    }
+        .stApp::before {{
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.85);
+            z-index: 0;
+        }}
 
-    .block-container {
-        background-color: rgba(255, 255, 255, 0.88) !important;
-        padding: 2rem 1rem;
-        z-index: 1;
-    }
+        [data-testid="stAppViewContainer"] {{
+            position: relative !important;
+            z-index: 1 !important;
+            height: auto !important;
+            overflow: visible !important;
+        }}
 
-    .stApp::before {
-        content: none !important;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-
-
+        .block-container {{
+            background-color: transparent !important;
+            z-index: 2;
+            position: relative;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 set_background()
 
 # ---------- LOAD DATA ----------
