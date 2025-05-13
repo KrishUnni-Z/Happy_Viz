@@ -200,20 +200,28 @@ with tabs[1]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
         selected_year = st.selectbox("📅 Select Year for Map View", years, index=len(years) - 1, key="selected_year")
         map_metric = st.selectbox("📈 Choose a Happiness Indicator", metrics)
-    
+
+        if "reset_requested" not in st.session_state:
+            st.session_state.reset_requested = False
+
+        st.subheader("🗺️ Visualize Happiness Around the World")
+
+        if st.button("🔄 Reset Map View"):
+            st.session_state.reset_requested = True
+            st.experimental_rerun()
+
+        st.caption("⚪ White areas indicate countries with no available data.")
+
         filtered_df = df[df["Year"] == selected_year]
         hover_cols = ["Country"]
         for col in ["Rank", "Position Changes YOY"]:
             if col in filtered_df.columns:
                 hover_cols.append(col)
-    
-        # Streamlit title instead of plotly title
-        st.subheader("🗺️ Visualize Happiness Around the World")
-        if st.button("🔄 Reset Map View"):
-            st.experimental_rerun()
-    
-        st.caption("⚪ White areas indicate countries with no available data.")
-    
+
+        if st.session_state.reset_requested:
+            st.session_state.reset_requested = False
+
+        # 🌍 Globe-style map
         fig_map = px.choropleth(
             filtered_df,
             locations="Country",
@@ -221,18 +229,25 @@ with tabs[1]:
             color=map_metric,
             hover_name="Country",
             hover_data=hover_cols,
-            color_continuous_scale="Turbo",
+            color_continuous_scale="Turbo"
+        )
+        fig_map.update_geos(
+            projection_type="natural earth",
+            showcoastlines=True,
+            landcolor="white",
+            oceancolor="LightBlue",
+            showocean=True,
+            showframe=False,
         )
         fig_map.update_layout(
+            title=None,
             margin=dict(l=0, r=0, t=0, b=0),
-            geo=dict(
-                showocean=True,
-                oceancolor="LightBlue",
-                landcolor="white"
-            )
+            title_x=0.5
         )
         st.plotly_chart(fig_map, use_container_width=True)
-    
+
+    # Continue with Top 3 / Bottom 3, etc.
+
     
         if st.checkbox("🔍 Show countries performing better than global average"):
             avg_val = filtered_df[map_metric].mean()
