@@ -10,15 +10,27 @@ st.title("🌍 World Happiness Explorer")
 st.markdown("**From Data to Joy: Insights from Data Across Nations**")
 st.caption("Connecting metrics to meaning in the pursuit of global well-being")
 
-# ---------- FORCE LIGHT MODE ----------
+# ---------- FORCE LIGHT MODE FULL OVERRIDE ----------
 st.markdown("""
 <style>
-html, body, .stApp {
+html, body, .stApp, [data-testid="stAppViewContainer"], .block-container {
     color-scheme: light !important;
     background-color: white !important;
+    color: #1a1a1a !important;
+}
+
+body {
+    background-color: white !important;
+}
+
+header, footer, .css-18ni7ap.e8zbici2 {
+    background-color: white !important;
+    color: #1a1a1a !important;
+    border: none !important;
 }
 </style>
 """, unsafe_allow_html=True)
+
 
 # ---------- BACKGROUND ----------
 def set_background():
