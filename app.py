@@ -201,20 +201,17 @@ with tabs[1]:
 
         st.subheader("🗺️ Visualize Happiness Around the World")
 
-        # Form to group both selects and reset safely
-        with st.form(key="map_controls_form", clear_on_submit=False):
-            col1, col2, col3 = st.columns([3, 3, 2])
-            with col1:
-                selected_year = st.selectbox("📅 Select Year", years, index=len(years) - 1)
-            with col2:
-                map_metric = st.selectbox("📈 Choose Indicator", metrics)
-            with col3:
-                reset_clicked = st.form_submit_button("🔄 Reset")
+        # Setup map reset trigger
+        if "reset_map" not in st.session_state:
+            st.session_state.reset_map = False
 
-        # If reset is clicked, set to defaults
-        if reset_clicked:
-            selected_year = years[-1]
-            map_metric = metrics[0]
+        # Reset button above the map
+        if st.button("🔄 Reset Map View"):
+            st.session_state.reset_map = True
+
+        # Dropdowns (use your original logic)
+        selected_year = st.selectbox("📅 Select Year for Map View", years, index=len(years) - 1, key="selected_year")
+        map_metric = st.selectbox("📈 Choose a Happiness Indicator", metrics)
 
         st.caption("⚪ White areas indicate countries with no available data.")
 
@@ -224,6 +221,7 @@ with tabs[1]:
             if col in filtered_df.columns:
                 hover_cols.append(col)
 
+        # Draw the map
         fig_map = px.choropleth(
             filtered_df,
             locations="Country",
@@ -233,6 +231,7 @@ with tabs[1]:
             hover_data=hover_cols,
             color_continuous_scale="Turbo"
         )
+
         fig_map.update_geos(
             projection_type="natural earth",
             showcoastlines=True,
@@ -241,12 +240,18 @@ with tabs[1]:
             showocean=True,
             showframe=False,
         )
+
         fig_map.update_layout(
             title=None,
             margin=dict(l=0, r=0, t=0, b=0),
             title_x=0.5
         )
+
         st.plotly_chart(fig_map, use_container_width=True)
+
+        # Clear reset trigger so next render behaves normally
+        st.session_state.reset_map = False
+
     
         if st.checkbox("🔍 Show countries performing better than global average"):
             avg_val = filtered_df[map_metric].mean()
