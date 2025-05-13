@@ -197,7 +197,6 @@ This score is not random. It correlates strongly with several measurable indicat
 
 # ---------- TAB 1 ----------
 with tabs[1]:
-    with tabs[1]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
 
         st.subheader("🗺️ Visualize Happiness Around the World")
