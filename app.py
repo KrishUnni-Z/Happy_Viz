@@ -198,76 +198,76 @@ This score is not random. It correlates strongly with several measurable indicat
 # ---------- TAB 1 ----------
 with tabs[1]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
-    selected_year = st.selectbox("📅 Select Year for Map View", years, index=len(years) - 1, key="selected_year")
-    map_metric = st.selectbox("📈 Choose a Happiness Indicator", metrics)
-
-    filtered_df = df[df["Year"] == selected_year]
-    hover_cols = ["Country"]
-    for col in ["Rank", "Position Changes YOY"]:
-        if col in filtered_df.columns:
-            hover_cols.append(col)
-
-    # Streamlit title instead of plotly title
-    st.subheader("🗺️ Visualize Happiness Around the World")
-    if st.button("🔄 Reset Map View"):
-        st.experimental_rerun()
-
-    st.caption("⚪ White areas indicate countries with no available data.")
-
-    fig_map = px.choropleth(
-        filtered_df,
-        locations="Country",
-        locationmode="country names",
-        color=map_metric,
-        hover_name="Country",
-        hover_data=hover_cols,
-        color_continuous_scale="Turbo",
-    )
-    fig_map.update_layout(
-        margin=dict(l=0, r=0, t=0, b=0),
-        geo=dict(
-            showocean=True,
-            oceancolor="LightBlue",
-            landcolor="white"
+        selected_year = st.selectbox("📅 Select Year for Map View", years, index=len(years) - 1, key="selected_year")
+        map_metric = st.selectbox("📈 Choose a Happiness Indicator", metrics)
+    
+        filtered_df = df[df["Year"] == selected_year]
+        hover_cols = ["Country"]
+        for col in ["Rank", "Position Changes YOY"]:
+            if col in filtered_df.columns:
+                hover_cols.append(col)
+    
+        # Streamlit title instead of plotly title
+        st.subheader("🗺️ Visualize Happiness Around the World")
+        if st.button("🔄 Reset Map View"):
+            st.experimental_rerun()
+    
+        st.caption("⚪ White areas indicate countries with no available data.")
+    
+        fig_map = px.choropleth(
+            filtered_df,
+            locations="Country",
+            locationmode="country names",
+            color=map_metric,
+            hover_name="Country",
+            hover_data=hover_cols,
+            color_continuous_scale="Turbo",
         )
-    )
-    st.plotly_chart(fig_map, use_container_width=True)
-
-
-    if st.checkbox("🔍 Show countries performing better than global average"):
-        avg_val = filtered_df[map_metric].mean()
-        if map_metric == "Rank":
-            top_countries = filtered_df[filtered_df["Rank"] < avg_val]
-            st.success(f"{len(top_countries)} countries ranked better than average (Rank < {round(avg_val, 1)})")
-        else:
-            top_countries = filtered_df[filtered_df[map_metric] > avg_val]
-            st.success(f"{len(top_countries)} countries scored above average ({round(avg_val, 2)}) in '{map_metric}'")
-
-        fig_bar = px.bar(
-            top_countries.sort_values(map_metric, ascending=(map_metric == "Rank")).head(10),
-            x="Country", y=map_metric, color="Country",
-            title=f"Top Performing Countries in {map_metric}",
+        fig_map.update_layout(
+            margin=dict(l=0, r=0, t=0, b=0),
+            geo=dict(
+                showocean=True,
+                oceancolor="LightBlue",
+                landcolor="white"
+            )
         )
-        fig_bar.update_layout(title_x=0.5)
-        st.plotly_chart(fig_bar, use_container_width=True)
-
-    st.subheader("🏅 Top 3 and Bottom 3 Countries")
-
-    ascending = True if map_metric == "Rank" else False
-    top3 = filtered_df.sort_values(map_metric, ascending=ascending).head(3)
-    bottom3 = filtered_df.sort_values(map_metric, ascending=ascending).tail(3)
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        fig_top = px.bar(top3, x="Country", y=map_metric, color="Country", title="Top 3")
-        fig_top.update_layout(title_x=0.5)
-        st.plotly_chart(fig_top, use_container_width=True)
-
-    with col2:
-        fig_bottom = px.bar(bottom3, x="Country", y=map_metric, color="Country", title="Bottom 3")
-        fig_bottom.update_layout(title_x=0.5)
-        st.plotly_chart(fig_bottom, use_container_width=True)
+        st.plotly_chart(fig_map, use_container_width=True)
+    
+    
+        if st.checkbox("🔍 Show countries performing better than global average"):
+            avg_val = filtered_df[map_metric].mean()
+            if map_metric == "Rank":
+                top_countries = filtered_df[filtered_df["Rank"] < avg_val]
+                st.success(f"{len(top_countries)} countries ranked better than average (Rank < {round(avg_val, 1)})")
+            else:
+                top_countries = filtered_df[filtered_df[map_metric] > avg_val]
+                st.success(f"{len(top_countries)} countries scored above average ({round(avg_val, 2)}) in '{map_metric}'")
+    
+            fig_bar = px.bar(
+                top_countries.sort_values(map_metric, ascending=(map_metric == "Rank")).head(10),
+                x="Country", y=map_metric, color="Country",
+                title=f"Top Performing Countries in {map_metric}",
+            )
+            fig_bar.update_layout(title_x=0.5)
+            st.plotly_chart(fig_bar, use_container_width=True)
+    
+        st.subheader("🏅 Top 3 and Bottom 3 Countries")
+    
+        ascending = True if map_metric == "Rank" else False
+        top3 = filtered_df.sort_values(map_metric, ascending=ascending).head(3)
+        bottom3 = filtered_df.sort_values(map_metric, ascending=ascending).tail(3)
+    
+        col1, col2 = st.columns(2)
+    
+        with col1:
+            fig_top = px.bar(top3, x="Country", y=map_metric, color="Country", title="Top 3")
+            fig_top.update_layout(title_x=0.5)
+            st.plotly_chart(fig_top, use_container_width=True)
+    
+        with col2:
+            fig_bottom = px.bar(bottom3, x="Country", y=map_metric, color="Country", title="Bottom 3")
+            fig_bottom.update_layout(title_x=0.5)
+            st.plotly_chart(fig_bottom, use_container_width=True)
 
 # ---------- TAB 2 ----------
 with tabs[2]:
