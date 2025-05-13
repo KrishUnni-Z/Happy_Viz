@@ -59,8 +59,9 @@ def set_viewport_alerts():
         div.id = "custom-popup";
         div.innerHTML = message;
         div.style.position = "fixed";
-        div.style.top = "20px";
-        div.style.right = "20px";
+        div.style.top = "10px";
+        div.style.left = "50%";
+        div.style.transform = "translateX(-50%)";
         div.style.padding = "12px 18px";
         div.style.backgroundColor = "#fff3cd";
         div.style.color = "#664d03";
@@ -68,14 +69,14 @@ def set_viewport_alerts():
         div.style.borderRadius = "8px";
         div.style.boxShadow = "0 2px 6px rgba(0,0,0,0.1)";
         div.style.zIndex = "9999";
-        div.style.maxWidth = "300px";
+        div.style.maxWidth = "90vw";
         div.style.fontSize = "14px";
+        div.style.textAlign = "center";
         document.body.appendChild(div);
 
         setTimeout(() => { div.remove(); }, 10000);
     }
 
-    // Wait until Streamlit fully loads
     function detectAndShowTips() {
         const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const isPortrait = window.matchMedia("(orientation: portrait)").matches;
@@ -84,12 +85,12 @@ def set_viewport_alerts():
             showPopup("🔆 You're in dark mode. Tap the ⋮ menu → Settings → Theme → Light.");
         }
         if (isPortrait) {
-            showPopup("📱 Rotate your phone sideways (landscape) for better viewing.");
+            showPopup("📱 Tip: Rotate your phone sideways for a better experience.");
         }
     }
 
     window.addEventListener("load", () => {
-        requestAnimationFrame(() => setTimeout(detectAndShowTips, 500));
+        requestAnimationFrame(() => setTimeout(detectAndShowTips, 600));
     });
     </script>
     """, unsafe_allow_html=True)
