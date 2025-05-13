@@ -10,28 +10,6 @@ st.title("🌍 World Happiness Explorer")
 st.markdown("**From Data to Joy: Insights from Data Across Nations**")
 st.caption("Connecting metrics to meaning in the pursuit of global well-being")
 
-# ---------- FORCE LIGHT MODE FULL OVERRIDE ----------
-st.markdown("""
-<style>
-html, body, .stApp, [data-testid="stAppViewContainer"], .block-container {
-    color-scheme: light !important;
-    background-color: white !important;
-    color: #1a1a1a !important;
-}
-
-body {
-    background-color: white !important;
-}
-
-header, footer, .css-18ni7ap.e8zbici2 {
-    background-color: white !important;
-    color: #1a1a1a !important;
-    border: none !important;
-}
-</style>
-""", unsafe_allow_html=True)
-
-
 # ---------- BACKGROUND ----------
 def set_background():
     st.markdown(
@@ -97,16 +75,21 @@ def set_viewport_alerts():
         setTimeout(() => { div.remove(); }, 10000);
     }
 
-    window.addEventListener("load", () => {
-        const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // Wait until Streamlit fully loads
+    function detectAndShowTips() {
+        const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const isPortrait = window.matchMedia("(orientation: portrait)").matches;
 
         if (isDarkMode) {
-            showPopup("🔆 You’re in dark mode. For best results, click the ⋮ in the top-right → Settings → Theme → Light.");
+            showPopup("🔆 You're in dark mode. Tap the ⋮ menu → Settings → Theme → Light.");
         }
         if (isPortrait) {
-            showPopup("📱 Rotate your phone sideways (landscape) for a better viewing experience.");
+            showPopup("📱 Rotate your phone sideways (landscape) for better viewing.");
         }
+    }
+
+    window.addEventListener("load", () => {
+        requestAnimationFrame(() => setTimeout(detectAndShowTips, 500));
     });
     </script>
     """, unsafe_allow_html=True)
