@@ -244,9 +244,18 @@ with tabs[1]:
             st.plotly_chart(fig_map, use_container_width=True)
 
             # Back button
+            if "go_back" not in st.session_state:
+                st.session_state.go_back = False
+            
             if st.button("🔙 Back to Year View"):
+                st.session_state.go_back = True
+            
+            # Handle rerun after button press cleanly
+            if st.session_state.go_back:
                 st.session_state.play_animation_active = False
+                st.session_state.go_back = False
                 st.experimental_rerun()
+
 
         else:
             selected_year = st.selectbox("📅 Select Year for Map View", years, index=len(years) - 1, key="selected_year")
