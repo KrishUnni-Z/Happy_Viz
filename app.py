@@ -35,7 +35,7 @@ header, footer, .css-18ni7ap.e8zbici2 {
 # ---------- BACKGROUND ----------
 def set_background():
     st.markdown(
-        f"""
+        """
         <style>
         html, body {
             height: auto !important;
@@ -47,16 +47,16 @@ def set_background():
             color: #1a1a1a !important;
         }
 
-        .stApp {{
+        .stApp {
             background-image: url("https://www.loopnews.com/wp-content/uploads/2024/03/istock-happy-sad_a278859f233bb569042db30cffe4f8ab-4.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center top;
             background-attachment: scroll;
             min-height: 100vh;
-        }}
+        }
 
-        .stApp::before {{
+        .stApp::before {
             content: "";
             position: absolute;
             top: 0;
@@ -65,24 +65,25 @@ def set_background():
             height: 100%;
             background-color: rgba(255, 255, 255, 0.85);
             z-index: 0;
-        }}
+        }
 
-        [data-testid="stAppViewContainer"] {{
+        [data-testid="stAppViewContainer"] {
             position: relative !important;
             z-index: 1 !important;
             height: auto !important;
             overflow: visible !important;
-        }}
+        }
 
-        .block-container {{
+        .block-container {
             background-color: transparent !important;
             z-index: 2;
             position: relative;
-        }}
+        }
         </style>
         """,
         unsafe_allow_html=True
     )
+
 set_background()
 
 # ---------- LOAD DATA ----------
