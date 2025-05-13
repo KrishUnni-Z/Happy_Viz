@@ -96,41 +96,56 @@ This score is not random. It correlates strongly with several measurable indicat
 """)
 
     st.subheader("📊 Indicators in This Explorer")
-    st.markdown("Click a topic below to learn how it is measured and where its data comes from.")
+    st.markdown("Choose a metric below to see what it measures and where the data comes from.")
 
-    st.markdown("""
-    <style>
-    .indicator-box {
-        background-color: #f8f9fa;
-        padding: 1rem 1.5rem;
-        border-radius: 12px;
-        margin-bottom: 1.2rem;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    metric_details = {
+        "🏆 Rank": {
+            "title": "Rank",
+            "desc": "This is where a country stands on the global happiness list. A lower rank means higher happiness.",
+            "source": "Source: Gallup World Poll & WHR analysis"
+        },
+        "💰 GDP": {
+            "title": "Log GDP per capita",
+            "desc": "Income level adjusted for prices and population size. Reflects general living standards.",
+            "source": "Source: World Bank WDI, OECD & World Bank (2024 forecasts)"
+        },
+        "🤝 Support": {
+            "title": "Social support",
+            "desc": "Share of people who feel they have someone they can rely on in times of trouble.",
+            "source": "Source: Gallup World Poll (2024)"
+        },
+        "❤️ Health": {
+            "title": "Healthy life expectancy",
+            "desc": "Estimates how long people live in good health, not just how long they live.",
+            "source": "Source: WHO GHO, WDI, and Lancet global estimates"
+        },
+        "🕊️ Freedom": {
+            "title": "Freedom to make life choices",
+            "desc": "Reflects whether people feel free to choose the life they want and feel satisfied with it.",
+            "source": "Source: Gallup World Poll (2024)"
+        },
+        "🎁 Generosity": {
+            "title": "Generosity",
+            "desc": "Based on whether people recently donated to charity, adjusted across income levels.",
+            "source": "Source: Gallup World Poll + statistical regression"
+        },
+        "🚨 Corruption": {
+            "title": "Perceptions of corruption",
+            "desc": "Shows how widespread people think corruption is in government and business.",
+            "source": "Source: Gallup World Poll (2024)"
+        }
     }
-    .indicator-title {
-        font-size: 1.1rem;
-        font-weight: 600;
-    }
-    </style>
-    """, unsafe_allow_html=True)
 
-    metrics_info = {
-        "Rank": {"emoji": "🏆", "desc": "Country position on the happiness list. Lower is happier.", "source": "Source: Gallup World Poll & WHR analysis"},
-        "Log GDP per capita": {"emoji": "💰", "desc": "Income level adjusted for price and population.", "source": "Source: World Bank WDI, OECD & World Bank"},
-        "Social support": {"emoji": "🤝", "desc": "Share of people with someone to rely on.", "source": "Source: Gallup World Poll (2024)"},
-        "Healthy life expectancy": {"emoji": "❤️", "desc": "Expected healthy years lived.", "source": "Source: WHO, WDI, Lancet (2012)"},
-        "Freedom to make life choices": {"emoji": "🕊️", "desc": "How free people feel in life decisions.", "source": "Source: Gallup World Poll (2024)"},
-        "Generosity": {"emoji": "🎁", "desc": "Charity donation rate adjusted for income.", "source": "Source: Gallup World Poll + regression"},
-        "Perceptions of corruption": {"emoji": "🚨", "desc": "How common people think corruption is.", "source": "Source: Gallup World Poll (2024)"}
-    }
+    selected_metric = st.radio(
+        "Select a metric to view details:",
+        list(metric_details.keys()),
+        horizontal=True
+    )
 
-    for metric, info in metrics_info.items():
-        with st.container():
-            st.markdown(f"<div class='indicator-box'>", unsafe_allow_html=True)
-            with st.expander(f"{info['emoji']}  {metric}"):
-                st.markdown(f"<span class='indicator-title'>What it means:</span><br>{info['desc']}", unsafe_allow_html=True)
-                st.markdown(f"<span style='font-size: 0.9em; color: gray;'>{info['source']}</span>", unsafe_allow_html=True)
-            st.markdown("</div>", unsafe_allow_html=True)
+    selected = metric_details[selected_metric]
+    st.markdown(f"### {selected['title']}")
+    st.markdown(f"**What it means:** {selected['desc']}")
+    st.markdown(f"<span style='font-size: 0.9em; color: gray;'>{selected['source']}</span>", unsafe_allow_html=True)
 
     st.subheader("📂 Where the Data Comes From")
     st.markdown("""
