@@ -208,6 +208,9 @@ with tabs[1]:
                 hover_cols.append(col)
 
         st.subheader("🗺️ Visualize Happiness Around the World")
+        # Show reset button
+        reset = st.button("🔄 Reset Map View")
+        
         fig_map = px.choropleth(
             filtered_df,
             locations="Country",
@@ -218,9 +221,24 @@ with tabs[1]:
             color_continuous_scale="Turbo",
             title=f"{map_metric} by Country in {selected_year}",
         )
-        fig_map.update_layout(margin=dict(l=0, r=0, t=0, b=0), title_x=0.5)
-        fig_map.update_geos(showocean=True, oceancolor="LightBlue", landcolor="white")
+        
+        # Set consistent geo and remove margin
+        fig_map.update_layout(
+            margin=dict(l=0, r=0, t=10, b=0),
+            title_x=0.5,
+            geo=dict(
+                showocean=True,
+                oceancolor="LightBlue",
+                landcolor="white",
+                projection_type="natural earth",
+                showcountries=True,
+                lataxis_range=None if reset else fig_map.layout.geo.lataxis.range,
+                lonaxis_range=None if reset else fig_map.layout.geo.lonaxis.range,
+            )
+        )
+        
         st.plotly_chart(fig_map, use_container_width=True)
+
 
         st.caption("⚪ White areas indicate countries with no available data.")
 
