@@ -70,10 +70,20 @@ def load_data():
 df = load_data()
 countries = sorted(df["Country"].unique().tolist())
 years = sorted(df["Year"].unique())
+metrics = ["Rank", "Log GDP per capita", "Social support", "Healthy life expectancy",
+           "Freedom to make life choices", "Generosity", "Perceptions of corruption"]
+
+tabs = st.tabs([
+    "📋 How Is Happiness Measured?",
+    "🗺️ Global Happiness Map",
+    "🔍 Country Trends & Correlation Explorer",
+    "📌 Conclusions"
+])
 
 # ---------- TAB 0 ----------
-st.header("📋 How Is Happiness Measured?")
-st.markdown("""
+with tabs[0]:
+    st.header("📋 How Is Happiness Measured?")
+    st.markdown("""
 The **World Happiness Report** brings together responses from people in over **140 countries and regions**, capturing how individuals rate their current lives.
 
 To measure happiness, participants are asked to imagine a ladder with steps numbered from 0 to 10. The top of the ladder represents the best possible life, and the bottom represents the worst. Then they’re asked:
@@ -82,61 +92,41 @@ To measure happiness, participants are asked to imagine a ladder with steps numb
 
 The average response across each country becomes its **happiness score**.
 
-This score is not random. It correlates strongly with several measurable indicators — such as income, health, freedom, generosity, and social connection — that together offer a data-driven view of well-being.
+This score is not random. It correlates strongly with several measurable indicators such as income, health, freedom, generosity, and social connection. Together they offer a data-driven view of well-being.
 """)
 
-st.subheader("📊 Indicators in This Explorer")
-st.markdown("Click a topic below to learn how it is measured and where its data comes from.")
+    st.subheader("📊 Indicators in This Explorer")
+    st.markdown("Click a topic below to learn how it is measured and where its data comes from.")
 
-metrics_info = {
-    "Rank": {
-        "emoji": "🏆",
-        "desc": "This is where a country stands on the global happiness list. The lower the rank, the happier the nation overall.",
-        "source": "Source: Gallup World Poll & WHR analysis",
-    },
-    "Log GDP per capita": {
-        "emoji": "💰",
-        "desc": "A fair comparison of income across countries — adjusted for prices and population size. It reflects general living standards.",
-        "source": "Source: World Bank WDI, OECD & World Bank (2024 forecasts)",
-    },
-    "Social support": {
-        "emoji": "🤝",
-        "desc": "Measures how many people feel they have someone they can count on in tough times — like a close friend or family member.",
-        "source": "Source: Gallup World Poll (2024)",
-    },
-    "Healthy life expectancy": {
-        "emoji": "❤️",
-        "desc": "Estimates how long people live in good health — not just how long they live.",
-        "source": "Source: WHO GHO, WDI, and Lancet global estimates",
-    },
-    "Freedom to make life choices": {
-        "emoji": "🕊️",
-        "desc": "Reflects whether people feel free to choose the life they want — and feel satisfied doing so.",
-        "source": "Source: Gallup World Poll (2024)",
-    },
-    "Generosity": {
-        "emoji": "🎁",
-        "desc": "Based on whether people recently donated to charity — adjusted to be fair across different income levels.",
-        "source": "Source: Gallup World Poll + statistical regression",
-    },
-    "Perceptions of corruption": {
-        "emoji": "🚨",
-        "desc": "Shows how widespread people think corruption is in their government or local businesses. Lower is better.",
-        "source": "Source: Gallup World Poll (2024)",
+    metrics_info = {
+        "Rank": {"emoji": "🏆", "desc": "Country position on the happiness list. Lower is happier.",
+                 "source": "Source: Gallup World Poll & WHR analysis"},
+        "Log GDP per capita": {"emoji": "💰", "desc": "Income level adjusted for price and population.",
+                               "source": "World Bank WDI, OECD & World Bank"},
+        "Social support": {"emoji": "🤝", "desc": "Share of people with someone to rely on.",
+                           "source": "Gallup World Poll (2024)"},
+        "Healthy life expectancy": {"emoji": "❤️", "desc": "Expected healthy years lived.",
+                                    "source": "WHO, WDI, Lancet (2012)"},
+        "Freedom to make life choices": {"emoji": "🕊️", "desc": "How free people feel in life decisions.",
+                                         "source": "Gallup World Poll (2024)"},
+        "Generosity": {"emoji": "🎁", "desc": "Charity donation rate adjusted for income.",
+                       "source": "Gallup World Poll + regression"},
+        "Perceptions of corruption": {"emoji": "🚨", "desc": "How common people think corruption is.",
+                                      "source": "Gallup World Poll (2024)"}
     }
-}
 
-for metric, info in metrics_info.items():
-    with st.expander(f"{info['emoji']} {metric}"):
-        st.markdown(f"**What it means:** {info['desc']}")
-        st.markdown(f"<span style='font-size: 0.9em; color: gray;'>{info['source']}</span>", unsafe_allow_html=True)
+    for metric, info in metrics_info.items():
+        with st.expander(f"{info['emoji']} {metric}"):
+            st.markdown(f"**What it means:** {info['desc']}")
+            st.markdown(f"<span style='font-size: 0.9em; color: gray;'>{info['source']}</span>", unsafe_allow_html=True)
 
-st.subheader("📂 Where the Data Comes From")
-st.markdown("""
+    st.subheader("📂 Where the Data Comes From")
+    st.markdown("""
 All data shown here is based on the official World Happiness Report datasets.  
 To explore the full data or download it yourself, visit:  
 👉 [**worldhappiness.report/data-sharing**](https://worldhappiness.report/data-sharing/)
 """)
+
 # ---------- TAB 1 ----------
 with tabs[1]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
