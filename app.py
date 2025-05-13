@@ -5,7 +5,10 @@ from streamlit_extras.stylable_container import stylable_container
 
 # ---------- CONFIG ----------
 st.set_page_config(layout="wide", page_title="World Happiness Explorer", page_icon="😊")
+
 st.title("🌍 World Happiness Explorer")
+st.markdown("**From Data to Joy: Insights from Data Across Nations**")
+st.caption("Connecting metrics to meaning in the pursuit of global well-being")
 
 # ---------- BACKGROUND ----------
 def set_background():
@@ -67,39 +70,24 @@ def load_data():
 df = load_data()
 countries = sorted(df["Country"].unique().tolist())
 years = sorted(df["Year"].unique())
-metrics = ["Rank", "Log GDP per capita", "Social support", "Healthy life expectancy",
-           "Freedom to make life choices", "Generosity", "Perceptions of corruption"]
 
-# ---------- TABS ----------
-tabs = st.tabs([
-    "📋 How is Happiness Measured?",
-    "🗺️ Global Happiness Map",
-    "🔍 Country Trends & Correlation Explorer",
-    "📌 Conclusions"
-])
+# ---------- TAB 0 ----------
+st.header("📋 How Is Happiness Measured?")
+st.markdown("""
+The **World Happiness Report** brings together responses from people in over **140 countries and regions**, capturing how individuals rate their current lives.
 
-# ---------- TAB 0 (LEAVE UNCHANGED) ----------
-with tabs[0]:
-    with stylable_container("story-intro", css_styles="padding: 1rem; background-color:#f0f4f8; border-radius:8px"):
-        st.header("📋 How is Happiness Measured?")
-        
-        st.markdown("""
-        The **World Happiness Report** collects responses from people in more than **140 countries and regions**, representing the majority of the world’s adult population.
-        
-        To measure happiness, people are asked to imagine a ladder with steps numbered from 0 to 10. The top of the ladder represents the best possible life for them, and the bottom represents the worst. Then they are asked:
-        
-        > *"On which step of the ladder would you say you personally feel you stand at this time?"*
-        
-        Their average response becomes the country’s **happiness score**.
-        
-        This score is shaped by several important factors such as income, health, freedom, generosity, and social support. Each one helps explain why some countries are happier than others.
-        """)
+To measure happiness, participants are asked to imagine a ladder with steps numbered from 0 to 10. The top of the ladder represents the best possible life, and the bottom represents the worst. Then they’re asked:
 
-        st.subheader("📊 What Makes a Country Happy?")
+> *"On which step of the ladder would you say you personally feel you stand at this time?"*
 
-st.markdown("Each country’s happiness score is built from a mix of social, economic, and emotional factors. Tap below to explore what each one really means:")
+The average response across each country becomes its **happiness score**.
 
-# Friendly and styled descriptions
+This score is not random. It correlates strongly with several measurable indicators — such as income, health, freedom, generosity, and social connection — that together offer a data-driven view of well-being.
+""")
+
+st.subheader("📊 Indicators in This Explorer")
+st.markdown("Click a topic below to learn how it is measured and where its data comes from.")
+
 metrics_info = {
     "Rank": {
         "emoji": "🏆",
@@ -128,7 +116,7 @@ metrics_info = {
     },
     "Generosity": {
         "emoji": "🎁",
-        "desc": "Looks at how many people recently donated to charity — adjusted to be fair across different income levels.",
+        "desc": "Based on whether people recently donated to charity — adjusted to be fair across different income levels.",
         "source": "Source: Gallup World Poll + statistical regression",
     },
     "Perceptions of corruption": {
@@ -143,16 +131,12 @@ for metric, info in metrics_info.items():
         st.markdown(f"**What it means:** {info['desc']}")
         st.markdown(f"<span style='font-size: 0.9em; color: gray;'>{info['source']}</span>", unsafe_allow_html=True)
 
-# Data source footer
 st.subheader("📂 Where the Data Comes From")
-
 st.markdown("""
 All data shown here is based on the official World Happiness Report datasets.  
 To explore the full data or download it yourself, visit:  
 👉 [**worldhappiness.report/data-sharing**](https://worldhappiness.report/data-sharing/)
 """)
-
-
 # ---------- TAB 1 ----------
 with tabs[1]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
