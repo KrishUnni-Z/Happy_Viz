@@ -34,47 +34,47 @@ header, footer, .css-18ni7ap.e8zbici2 {
 
 # ---------- BACKGROUND ----------
 def set_background():
-    st.markdown(
-        """
-        <style>
-        html, body {
-            background-color: white !important;
-            color-scheme: light !important;
-        }
+    st.markdown("""
+    <style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        color-scheme: light !important;
+        background-color: white !important;
+        overflow-x: hidden;
+    }
 
-        .stApp {
-            background-image: url("https://www.loopnews.com/wp-content/uploads/2024/03/istock-happy-sad_a278859f233bb569042db30cffe4f8ab-4.jpg");
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center top;
-            background-repeat: no-repeat;
-        }
+    .stApp {
+        background-image: url("https://www.loopnews.com/wp-content/uploads/2024/03/istock-happy-sad_a278859f233bb569042db30cffe4f8ab-4.jpg");
+        background-size: cover;
+        background-attachment: scroll;
+        background-position: center top;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+    }
 
-        /* Override Streamlit theme system */
-        [data-testid="stAppViewContainer"] {
-            background: transparent !important;
-            position: relative;
-            z-index: 1;
-        }
+    [data-testid="stAppViewContainer"] {
+        position: relative;
+        z-index: 1;
+        overflow-y: auto;
+        height: auto;
+    }
 
-        .stApp::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(255, 255, 255, 0.85);
-            z-index: 0;
-        }
+    .block-container {
+        background-color: rgba(255, 255, 255, 0.88);
+        padding: 2rem 1rem;
+        z-index: 2;
+        position: relative;
+    }
 
-        .block-container {
-            background: transparent !important;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+    /* Remove the fixed overlay entirely */
+    .stApp::before {
+        content: none !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
 
 set_background()
 
