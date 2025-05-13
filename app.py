@@ -98,27 +98,39 @@ This score is not random. It correlates strongly with several measurable indicat
     st.subheader("📊 Indicators in This Explorer")
     st.markdown("Click a topic below to learn how it is measured and where its data comes from.")
 
+    st.markdown("""
+    <style>
+    .indicator-box {
+        background-color: #f8f9fa;
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        margin-bottom: 1.2rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .indicator-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     metrics_info = {
-        "Rank": {"emoji": "🏆", "desc": "Country position on the happiness list. Lower is happier.",
-                 "source": "Source: Gallup World Poll & WHR analysis"},
-        "Log GDP per capita": {"emoji": "💰", "desc": "Income level adjusted for price and population.",
-                               "source": "World Bank WDI, OECD & World Bank"},
-        "Social support": {"emoji": "🤝", "desc": "Share of people with someone to rely on.",
-                           "source": "Gallup World Poll (2024)"},
-        "Healthy life expectancy": {"emoji": "❤️", "desc": "Expected healthy years lived.",
-                                    "source": "WHO, WDI, Lancet (2012)"},
-        "Freedom to make life choices": {"emoji": "🕊️", "desc": "How free people feel in life decisions.",
-                                         "source": "Gallup World Poll (2024)"},
-        "Generosity": {"emoji": "🎁", "desc": "Charity donation rate adjusted for income.",
-                       "source": "Gallup World Poll + regression"},
-        "Perceptions of corruption": {"emoji": "🚨", "desc": "How common people think corruption is.",
-                                      "source": "Gallup World Poll (2024)"}
+        "Rank": {"emoji": "🏆", "desc": "Country position on the happiness list. Lower is happier.", "source": "Source: Gallup World Poll & WHR analysis"},
+        "Log GDP per capita": {"emoji": "💰", "desc": "Income level adjusted for price and population.", "source": "Source: World Bank WDI, OECD & World Bank"},
+        "Social support": {"emoji": "🤝", "desc": "Share of people with someone to rely on.", "source": "Source: Gallup World Poll (2024)"},
+        "Healthy life expectancy": {"emoji": "❤️", "desc": "Expected healthy years lived.", "source": "Source: WHO, WDI, Lancet (2012)"},
+        "Freedom to make life choices": {"emoji": "🕊️", "desc": "How free people feel in life decisions.", "source": "Source: Gallup World Poll (2024)"},
+        "Generosity": {"emoji": "🎁", "desc": "Charity donation rate adjusted for income.", "source": "Source: Gallup World Poll + regression"},
+        "Perceptions of corruption": {"emoji": "🚨", "desc": "How common people think corruption is.", "source": "Source: Gallup World Poll (2024)"}
     }
 
     for metric, info in metrics_info.items():
-        with st.expander(f"{info['emoji']} {metric}"):
-            st.markdown(f"**What it means:** {info['desc']}")
-            st.markdown(f"<span style='font-size: 0.9em; color: gray;'>{info['source']}</span>", unsafe_allow_html=True)
+        with st.container():
+            st.markdown(f"<div class='indicator-box'>", unsafe_allow_html=True)
+            with st.expander(f"{info['emoji']}  {metric}"):
+                st.markdown(f"<span class='indicator-title'>What it means:</span><br>{info['desc']}", unsafe_allow_html=True)
+                st.markdown(f"<span style='font-size: 0.9em; color: gray;'>{info['source']}</span>", unsafe_allow_html=True)
+            st.markdown("</div>", unsafe_allow_html=True)
 
     st.subheader("📂 Where the Data Comes From")
     st.markdown("""
@@ -126,7 +138,6 @@ All data shown here is based on the official World Happiness Report datasets.
 To explore the full data or download it yourself, visit:  
 👉 [**worldhappiness.report/data-sharing**](https://worldhappiness.report/data-sharing/)
 """)
-
 # ---------- TAB 1 ----------
 with tabs[1]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
