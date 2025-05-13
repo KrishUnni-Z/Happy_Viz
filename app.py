@@ -105,88 +105,84 @@ with tabs[0]:
         - [The World Happiness Report](https://worldhappiness.report/data-sharing/)
         """)
 
+# ---------- TAB 1 (ENHANCED) ----------
 with tabs[1]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
-        selected_year = st.selectbox("📅 Select Year for Map View", years, index=len(years) - 1, key="selected_year")
+        selected_year = st.selectbox("📅 Select Year", years, index=len(years)-1)
         map_metric = st.selectbox("📈 Choose a Happiness Indicator", metrics)
         filtered_df = df[df["Year"] == selected_year]
 
-        # Hover details
-        hover_cols = ["Country"]
-        for col in ["Rank", "Position Changes YOY"]:
-            if col in filtered_df.columns:
-                hover_cols.append(col)
+        regions = {
+            "All": countries,
+            "Asia": ["India", "Thailand", "Japan", "Singapore"],
+            "Europe": ["Finland", "Spain", "Germany", "France", "Italy"],
+            "Americas": ["United States", "Canada", "Brazil", "Argentina"],
+            "Oceania": ["Australia", "New Zealand"]
+        }
+        selected_region = st.selectbox("🌎 Filter Region", list(regions.keys()), index=0)
+        region_countries = regions[selected_region]
+        region_df = filtered_df[filtered_df["Country"].isin(region_countries)] if selected_region != "All" else filtered_df
 
-        st.subheader("🗺️ Visualize Happiness Around the World")
+        st.subheader("🗺️ Happiness Around the World")
         fig_map = px.choropleth(
-            filtered_df,
+            region_df,
             locations="Country",
             locationmode="country names",
             color=map_metric,
             hover_name="Country",
-            hover_data=hover_cols,
-            color_continuous_scale="Turbo"
+            hover_data=["Country", "Rank"] if "Rank" in region_df.columns else ["Country"],
+            color_continuous_scale="Turbo",
+            height=500
         )
-        fig_map.update_geos(
-            showocean=True, oceancolor="LightBlue", landcolor="white", projection_type="natural earth"
-        )
+        fig_map.update_geos(showocean=True, oceancolor="LightBlue", landcolor="white")
         fig_map.update_layout(margin=dict(l=0, r=0, t=0, b=0))
         st.plotly_chart(fig_map, use_container_width=True)
-    # Add footnote
-    st.caption("⚪ White areas indicate countries with no available data.")
 
+        st.caption("⚪ White areas indicate countries with no available data.")
+
+        if st.checkbox("🔍 Highlight countries above global average"):
+            avg_val = round(region_df[map_metric].mean(), 2)
+            above_avg = region_df[region_df[map_metric] > avg_val]
+            st.success(f"🌟 {len(above_avg)} countries scored above the global average ({avg_val}) for '{map_metric}'")
+            st.dataframe(above_avg[["Country", map_metric]].sort_values(by=map_metric, ascending=False), use_container_width=True)
+
+# ---------- TAB 2 (ENHANCED) ----------
 with tabs[2]:
     with stylable_container("global", css_styles="padding: 1rem; background-color:#fefefe; border-radius:8px"):
-        st.header("🌐 Global Average vs. Your Chosen Countries")
-        selected_countries = st.multiselect("🌏 Countries of Intesest", countries, default=["Australia", "Finland", "United States", "Singapore", "Spain", "India", "Thailand", "Japan"], key="global_countries")
-        compare_metric = st.selectbox("📈 Select a Happiness Indicator to Compare", metrics, index=0, key="global_metric")
+        st.header("📈 Animated Trends Across Years")
 
-        filtered_countries_df = filtered_df[filtered_df["Country"].isin(selected_countries)]
-        global_avg = filtered_df[compare_metric].mean()
+        trend_metric = st.selectbox("📊 Choose Metric", metrics, key="trend_metric")
+        selected_countries = st.multiselect("🌍 Choose Countries", countries, default=["Australia", "Finland", "India"])
 
-        st.metric(f"Global Avg {compare_metric}", f"{round(global_avg, 2)}")
-        fig_global = px.bar(
-            filtered_countries_df,
-            x='Country',
-            y=compare_metric,
-            color='Country',
-            title=f"{compare_metric} vs Global Average"
-        )
-        fig_global.add_hline(
-            y=global_avg,
-            line_dash="dot",
-            annotation_text="Global Avg",
-            line_color="red"
-        )
-        st.plotly_chart(fig_global, use_container_width=True)
+        if selected_countries:
+            animated_df = df[df["Country"].isin(selected_countries)]
+            fig_line = px.line(
+                animated_df, x="Year", y=trend_metric, color="Country", markers=True,
+                animation_frame="Year", range_y=[animated_df[trend_metric].min(), animated_df[trend_metric].max()]
+            )
+            st.plotly_chart(fig_line, use_container_width=True)
 
-    with stylable_container("comparison", css_styles="padding: 1rem; background-color:#fff8f2; border-radius:8px"):
-        st.header("📊 Track Trends Across Countries")
-        country_options = ["All Countries"] + countries
-        selected_countries = st.multiselect("🌏 Countries of Intesest", country_options, default=["Australia", "Finland", "United States", "Singapore", "Spain", "India", "Thailand", "Japan"])
+    with stylable_container("correlation", css_styles="padding: 1rem; background-color:#fff8f2; border-radius:8px"):
+        st.header("🧭 Explore Correlations")
 
-        if "All Countries" in selected_countries:
-            comp_df = df.copy()
-        else:
-            comp_df = df[df["Country"].isin(selected_countries)]
+        year_corr = st.selectbox("📅 Select Year", years, index=len(years)-1)
+        x_metric = st.selectbox("X-Axis", metrics, index=0)
+        y_metric = st.selectbox("Y-Axis", metrics, index=1)
 
-        compare_metric = st.selectbox("📈 Select a Happiness Indicator to Track", metrics, key="compare_metric")
-        fig_line = px.line(comp_df, x="Year", y=compare_metric, color="Country", markers=True)
-        st.plotly_chart(fig_line, use_container_width=True)
-
-        st.header("🧭 Explore Correlation Between Indicators")
-        year_corr = st.selectbox("📅 Select Year for Correlation View", years, index=len(years)-1, key="year_corr")
-        x_metric = st.selectbox("🔻 X-Axis Indicator", metrics, index=metrics.index("Log GDP per capita")
-            , key="x_metric")
-        y_metric = st.selectbox("🔺 Y-Axis Indicator", metrics, index=metrics.index("Social support")
-            , key="y_metric")
         corr_df = df[df["Year"] == year_corr]
-
-        if "All Countries" not in selected_countries:
+        if selected_countries:
             corr_df = corr_df[corr_df["Country"].isin(selected_countries)]
 
-        fig_corr = px.scatter(corr_df, x=x_metric, y=y_metric, size='Ladder Score', color='Country')
+        fig_corr = px.scatter(
+            corr_df, x=x_metric, y=y_metric,
+            size='Ladder Score', color='Country',
+            hover_name='Country'
+        )
         st.plotly_chart(fig_corr, use_container_width=True)
+
+        clicked_country = st.selectbox("🔎 View Specific Country", ["None"] + selected_countries)
+        if clicked_country != "None":
+            st.write(df[df["Country"] == clicked_country][["Year", x_metric, y_metric, "Ladder Score"]])
 
 with tabs[3]:
     with stylable_container("Conclusions", css_styles="padding: 1rem; background-color:#f0f4f8; border-radius:8px"):
