@@ -201,11 +201,15 @@ with tabs[1]:
 
         st.subheader("🗺️ Visualize Happiness Around the World")
 
-        # Animation toggle button
-        play_animation = st.button("▶️ Play Yearly Animation (2019–2024)")
+        # -- Animation state tracking --
+        if "play_animation_active" not in st.session_state:
+            st.session_state.play_animation_active = False
 
-        if play_animation:
-            map_metric = st.selectbox("📈 Choose Indicator", metrics, key="animated_metric")
+        if st.button("▶️ Play Yearly Animation (2019–2024)"):
+            st.session_state.play_animation_active = True
+
+        if st.session_state.play_animation_active:
+            map_metric = st.selectbox("📈 Choose Metric to Animate", metrics, index=metrics.index("Rank"), key="animated_metric")
 
             st.caption("Use the slider below the map to scroll through the years.")
 
@@ -238,6 +242,11 @@ with tabs[1]:
             )
 
             st.plotly_chart(fig_map, use_container_width=True)
+
+            # Back button
+            if st.button("🔙 Back to Year View"):
+                st.session_state.play_animation_active = False
+                st.experimental_rerun()
 
         else:
             selected_year = st.selectbox("📅 Select Year for Map View", years, index=len(years) - 1, key="selected_year")
@@ -275,7 +284,7 @@ with tabs[1]:
 
             st.plotly_chart(fig_map, use_container_width=True)
 
-            # These insights only shown in year-specific view
+            # Additional insights
             if st.checkbox("🔍 Show countries performing better than global average"):
                 avg_val = filtered_df[map_metric].mean()
                 if map_metric == "Rank":
