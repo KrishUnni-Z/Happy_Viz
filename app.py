@@ -10,6 +10,16 @@ st.title("🌍 World Happiness Explorer")
 st.markdown("**From Data to Joy: Insights from Data Across Nations**")
 st.caption("Connecting metrics to meaning in the pursuit of global well-being")
 
+# ---------- FORCE LIGHT MODE ----------
+st.markdown("""
+<style>
+html, body, .stApp {
+    color-scheme: light !important;
+    background-color: white !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # ---------- BACKGROUND ----------
 def set_background():
     st.markdown(
@@ -80,11 +90,10 @@ tabs = st.tabs([
     "📌 Conclusions"
 ])
 
-# ---------- TAB 0 ----------
 with tabs[0]:
     st.header("📋 How Is Happiness Measured?")
     st.markdown("""
-The **World Happiness Report** brings together responses from people in over **140 countries and regions**, capturing how individuals rate their current lives.
+The **World Happiness Report 2025** brings together responses from people in over **140 countries and regions**, capturing how individuals rate their current lives.
 
 To measure happiness, participants are asked to imagine a ladder with steps numbered from 0 to 10. The top of the ladder represents the best possible life, and the bottom represents the worst. Then they’re asked:
 
@@ -102,37 +111,37 @@ This score is not random. It correlates strongly with several measurable indicat
         "🏆 Rank": {
             "title": "Rank",
             "desc": "This is where a country stands on the global happiness list. A lower rank means higher happiness.",
-            "source": "From the WHR 2024 dataset. Score derived from weighted combination of indicator values."
+            "source": "From the World Happiness Report 2025 dataset. Score derived from weighted combination of indicator values."
         },
         "💰 GDP": {
             "title": "Log GDP per capita",
             "desc": "Income level adjusted for cost of living and population size. Reflects average living standards.",
-            "source": "From WHR 2024 dataset. Originally sourced from World Bank WDI, OECD, and Penn World Table."
+            "source": "From the World Happiness Report 2025 dataset. Originally sourced from World Bank WDI, OECD, and Penn World Table."
         },
         "🤝 Support": {
             "title": "Social support",
             "desc": "Measures whether people feel they have someone they can count on in times of trouble.",
-            "source": "From WHR 2024 dataset. Based on Gallup World Poll question on social reliability."
+            "source": "From the World Happiness Report 2025 dataset. Based on Gallup World Poll question on social reliability."
         },
         "❤️ Health": {
             "title": "Healthy life expectancy",
             "desc": "Estimates how long people live in good health, not just total lifespan.",
-            "source": "From WHR 2024 dataset. Derived using WHO, WDI, and global health models from Lancet."
+            "source": "From the World Happiness Report 2025 dataset. Derived using WHO, WDI, and global health models from Lancet."
         },
         "🕊️ Freedom": {
             "title": "Freedom to make life choices",
             "desc": "Reflects how free people feel to live their lives as they choose.",
-            "source": "From WHR 2024 dataset. Originally from Gallup World Poll life satisfaction items."
+            "source": "From the World Happiness Report 2025 dataset. Originally from Gallup World Poll life satisfaction items."
         },
         "🎁 Generosity": {
             "title": "Generosity",
             "desc": "Based on recent charitable donations, adjusted to account for income effects.",
-            "source": "From WHR 2024 dataset. Derived from Gallup donation responses and income regression."
+            "source": "From the World Happiness Report 2025 dataset. Derived from Gallup donation responses and income regression."
         },
         "🚨 Corruption": {
             "title": "Perceptions of corruption",
             "desc": "Captures how common people believe corruption is in government and business.",
-            "source": "From WHR 2024 dataset. Based on Gallup survey questions on perceived corruption."
+            "source": "From the World Happiness Report 2025 dataset. Based on Gallup survey questions on perceived corruption."
         }
     }
 
