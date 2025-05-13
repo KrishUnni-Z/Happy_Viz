@@ -201,56 +201,79 @@ with tabs[1]:
 
         st.subheader("🗺️ Visualize Happiness Around the World")
 
-        # Setup map reset trigger
-        if "reset_map" not in st.session_state:
-            st.session_state.reset_map = False
+        # Animation toggle button
+        play_animation = st.button("▶️ Play Yearly Animation (2019–2024)")
 
-        # Reset button above the map
-        if st.button("🔄 Reset Map View"):
-            st.session_state.reset_map = True
+        if play_animation:
+            map_metric = st.selectbox("📈 Choose Indicator", metrics, key="animated_metric")
 
-        # Dropdowns (use your original logic)
-        selected_year = st.selectbox("📅 Select Year for Map View", years, index=len(years) - 1, key="selected_year")
-        map_metric = st.selectbox("📈 Choose a Happiness Indicator", metrics)
+            st.caption("Use the slider below the map to scroll through the years.")
 
-        st.caption("⚪ White areas indicate countries with no available data.")
+            anim_df = df[df["Year"] >= 2019]
 
-        filtered_df = df[df["Year"] == selected_year]
-        hover_cols = ["Country"]
-        for col in ["Rank", "Position Changes YOY"]:
-            if col in filtered_df.columns:
-                hover_cols.append(col)
+            fig_map = px.choropleth(
+                anim_df,
+                locations="Country",
+                locationmode="country names",
+                color=map_metric,
+                hover_name="Country",
+                hover_data=["Country", map_metric],
+                color_continuous_scale="Turbo",
+                animation_frame="Year"
+            )
 
-        # Draw the map
-        fig_map = px.choropleth(
-            filtered_df,
-            locations="Country",
-            locationmode="country names",
-            color=map_metric,
-            hover_name="Country",
-            hover_data=hover_cols,
-            color_continuous_scale="Turbo"
-        )
+            fig_map.update_geos(
+                projection_type="natural earth",
+                showcoastlines=True,
+                landcolor="white",
+                oceancolor="LightBlue",
+                showocean=True,
+                showframe=False,
+            )
 
-        fig_map.update_geos(
-            projection_type="natural earth",
-            showcoastlines=True,
-            landcolor="white",
-            oceancolor="LightBlue",
-            showocean=True,
-            showframe=False,
-        )
+            fig_map.update_layout(
+                margin=dict(l=0, r=0, t=0, b=0),
+                title=None,
+                title_x=0.5
+            )
 
-        fig_map.update_layout(
-            title=None,
-            margin=dict(l=0, r=0, t=0, b=0),
-            title_x=0.5
-        )
+            st.plotly_chart(fig_map, use_container_width=True)
 
-        st.plotly_chart(fig_map, use_container_width=True)
+        else:
+            selected_year = st.selectbox("📅 Select Year for Map View", years, index=len(years) - 1, key="selected_year")
+            map_metric = st.selectbox("📈 Choose a Happiness Indicator", metrics, key="map_metric")
 
-        # Clear reset trigger so next render behaves normally
-        st.session_state.reset_map = False
+            st.caption("⚪ White areas indicate countries with no available data.")
+
+            filtered_df = df[df["Year"] == selected_year]
+            hover_cols = ["Country", map_metric]
+
+            fig_map = px.choropleth(
+                filtered_df,
+                locations="Country",
+                locationmode="country names",
+                color=map_metric,
+                hover_name="Country",
+                hover_data=hover_cols,
+                color_continuous_scale="Turbo"
+            )
+
+            fig_map.update_geos(
+                projection_type="natural earth",
+                showcoastlines=True,
+                landcolor="white",
+                oceancolor="LightBlue",
+                showocean=True,
+                showframe=False,
+            )
+
+            fig_map.update_layout(
+                title=None,
+                margin=dict(l=0, r=0, t=0, b=0),
+                title_x=0.5
+            )
+
+            st.plotly_chart(fig_map, use_container_width=True)
 
     
         if st.checkbox("🔍 Show countries performing better than global average"):
