@@ -212,7 +212,7 @@ with tabs[1]:
             map_metric = st.selectbox("📈 Choose Indicator", metrics, index=metrics.index("Rank"), key="animated_metric")
             st.caption("Use the slider below the map to scroll through the years.")
 
-            anim_df = df[df["Year"].between(2019, 2024)].sort_values("Year", ascending=False)
+            anim_df = df[(df["Year"] >= 2019) & (df["Year"] <= 2024)]
 
             fig_map = px.choropleth(
                 anim_df,
