@@ -86,28 +86,55 @@ with tabs[0]:
 
         The **happiness scores** (`ladder`) are central values with upper and lower bounds, calculated from several key factors:""")
 
-        st.subheader("📊 Key Factors in Happiness Scores")
+        st.subheader("📊 Key Factors That Shape Happiness")
 
-        st.markdown("""
-        - **GDP per capita**: Indicates purchasing power parity (PPP) at constant 2021 international dollar prices (from *World Development Indicators*).
-        - **Social support**: Based on responses to the question:  
-          *“If you were in trouble, do you have relatives or friends you can count on to help you whenever you need them, or not?”*
-        - **Healthy life expectancy**: Data extracted from the **World Health Organization (WHO)** Global Health Observatory.
-        - **Freedom to make life choices**: Based on responses to:  
-          *“Are you satisfied or dissatisfied with your freedom to choose what you do with your life?”*
-        - **Generosity**: Calculated as the residual from regressing national averages of the question:  
-          *“Have you donated money to a charity in the past month?”* on GDP per capita.
-        - **Perceptions of corruption**: National average of responses to two questions:  
-          1. *“Is corruption widespread throughout the government or not?”*  
-          2. *“Is corruption widespread within businesses or not?”*
-        - **Dystopia and residual**: Capture the baseline and unexplained variations in national happiness levels.
-        """)
+st.markdown("Click below to learn how each factor contributes to a country’s happiness score.")
 
-        st.subheader("📚 Source")
+metrics_info = {
+    "Rank": {
+        "desc": "Shows a country's position on the global happiness scale. A lower rank means higher happiness.",
+        "source": "Calculated using key indicators from the Gallup World Poll and external datasets.",
+    },
+    "Log GDP per capita": {
+        "desc": "Represents the income level in each country, adjusted for cost of living and population size.",
+        "source": "World Bank WDI (2024), OECD & World Bank forecasts.",
+    },
+    "Social support": {
+        "desc": "Measures how many people have someone to rely on during tough times — like family or close friends.",
+        "source": "Gallup World Poll (2024)",
+    },
+    "Healthy life expectancy": {
+        "desc": "Estimates how many years people live in good health, not just total lifespan.",
+        "source": "WHO Global Health Observatory, WDI, and Lancet estimates.",
+    },
+    "Freedom to make life choices": {
+        "desc": "Captures whether people feel free to live the life they want.",
+        "source": "Gallup World Poll (2024)",
+    },
+    "Generosity": {
+        "desc": "Based on whether people recently donated to charity — adjusted for income differences.",
+        "source": "Gallup World Poll + regression correction",
+    },
+    "Perceptions of corruption": {
+        "desc": "Reflects how much people think government and business corruption is widespread.",
+        "source": "Gallup World Poll (2024)",
+    }
+}
 
-        st.markdown("""
-        - [The World Happiness Report](https://worldhappiness.report/data-sharing/)
-        """)
+for metric, info in metrics_info.items():
+    with st.expander(f"🔎 {metric}"):
+        st.markdown(f"<b>What it means:</b><br>{info['desc']}", unsafe_allow_html=True)
+        st.markdown(f"<b>Data Source:</b> {info['source']}", unsafe_allow_html=True)
+
+# Add official data link (only)
+st.subheader("📂 Official Data Access")
+
+st.markdown("""
+The dataset used in this dashboard is published and maintained by the World Happiness Report team.  
+For full access, licensing terms, and downloads, visit:  
+👉 [worldhappiness.report/data-sharing](https://worldhappiness.report/data-sharing/)
+""")
+
 
 # ---------- TAB 1 ----------
 with tabs[1]:
