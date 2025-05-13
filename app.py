@@ -36,33 +36,31 @@ header, footer, .css-18ni7ap.e8zbici2 {
 def set_background():
     st.markdown("""
     <style>
-    html, body, .stApp {
-        height: auto !important;
-        min-height: 100vh;
-        background: white !important;
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
         color-scheme: light !important;
-        color: #1a1a1a !important;
+        background: white;
     }
 
     .stApp {
         background-image: url("https://www.loopnews.com/wp-content/uploads/2024/03/istock-happy-sad_a278859f233bb569042db30cffe4f8ab-4.jpg");
         background-size: cover;
         background-attachment: scroll;
-        background-repeat: no-repeat;
         background-position: center top;
+        background-repeat: no-repeat;
     }
 
     .block-container {
-        position: relative;
-        z-index: 1;
-        background-color: rgba(255, 255, 255, 0.85);
+        background-color: rgba(255, 255, 255, 0.88);  /* white with some transparency */
         padding: 2rem 1rem;
         border-radius: 0;
     }
 
     [data-testid="stAppViewContainer"] {
-        overflow: auto;
         height: auto;
+        overflow: auto;
     }
     </style>
     """, unsafe_allow_html=True)
