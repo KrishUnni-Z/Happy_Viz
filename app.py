@@ -46,18 +46,18 @@ def set_background():
         .stApp {
             background-image: url("https://www.loopnews.com/wp-content/uploads/2024/03/istock-happy-sad_a278859f233bb569042db30cffe4f8ab-4.jpg");
             background-size: cover;
-            background-attachment: fixed;
+            background-attachment: scroll;
             background-repeat: no-repeat;
-            background-position: center;
+            background-position: center top;
         }
 
         .stApp::before {
             content: "";
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
             background-color: rgba(255, 255, 255, 0.85);
             z-index: 0;
         }
@@ -75,6 +75,7 @@ def set_background():
         """,
         unsafe_allow_html=True
     )
+
 
 set_background()
 
