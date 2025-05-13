@@ -84,7 +84,7 @@ with tabs[0]:
         st.header("📋 How is Happiness Measured?")
         
         st.markdown("""
-        The **World Happiness Report** is based on answers from people in over **160 countries and territories**, covering more than **98% of the world’s adult population**.
+        The **World Happiness Report** collects responses from people in more than **140 countries and regions**, representing the majority of the world’s adult population.
         
         To measure happiness, people are asked to imagine a ladder with steps numbered from 0 to 10. The top of the ladder represents the best possible life for them, and the bottom represents the worst. Then they are asked:
         
