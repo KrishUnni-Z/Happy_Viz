@@ -96,43 +96,43 @@ This score is not random. It correlates strongly with several measurable indicat
 """)
 
     st.subheader("📊 Indicators in This Explorer")
-    st.markdown("Choose a metric below to see what it measures and where the data comes from.")
+    st.markdown("Choose a metric below to see how it is defined and where the data originally comes from.")
 
     metric_details = {
         "🏆 Rank": {
             "title": "Rank",
             "desc": "This is where a country stands on the global happiness list. A lower rank means higher happiness.",
-            "source": "Source: Gallup World Poll & WHR analysis"
+            "source": "From the WHR 2024 dataset. Score derived from weighted combination of indicator values."
         },
         "💰 GDP": {
             "title": "Log GDP per capita",
-            "desc": "Income level adjusted for prices and population size. Reflects general living standards.",
-            "source": "Source: World Bank WDI, OECD & World Bank (2024 forecasts)"
+            "desc": "Income level adjusted for cost of living and population size. Reflects average living standards.",
+            "source": "From WHR 2024 dataset. Originally sourced from World Bank WDI, OECD, and Penn World Table."
         },
         "🤝 Support": {
             "title": "Social support",
-            "desc": "Share of people who feel they have someone they can rely on in times of trouble.",
-            "source": "Source: Gallup World Poll (2024)"
+            "desc": "Measures whether people feel they have someone they can count on in times of trouble.",
+            "source": "From WHR 2024 dataset. Based on Gallup World Poll question on social reliability."
         },
         "❤️ Health": {
             "title": "Healthy life expectancy",
-            "desc": "Estimates how long people live in good health, not just how long they live.",
-            "source": "Source: WHO GHO, WDI, and Lancet global estimates"
+            "desc": "Estimates how long people live in good health, not just total lifespan.",
+            "source": "From WHR 2024 dataset. Derived using WHO, WDI, and global health models from Lancet."
         },
         "🕊️ Freedom": {
             "title": "Freedom to make life choices",
-            "desc": "Reflects whether people feel free to choose the life they want and feel satisfied with it.",
-            "source": "Source: Gallup World Poll (2024)"
+            "desc": "Reflects how free people feel to live their lives as they choose.",
+            "source": "From WHR 2024 dataset. Originally from Gallup World Poll life satisfaction items."
         },
         "🎁 Generosity": {
             "title": "Generosity",
-            "desc": "Based on whether people recently donated to charity, adjusted across income levels.",
-            "source": "Source: Gallup World Poll + statistical regression"
+            "desc": "Based on recent charitable donations, adjusted to account for income effects.",
+            "source": "From WHR 2024 dataset. Derived from Gallup donation responses and income regression."
         },
         "🚨 Corruption": {
             "title": "Perceptions of corruption",
-            "desc": "Shows how widespread people think corruption is in government and business.",
-            "source": "Source: Gallup World Poll (2024)"
+            "desc": "Captures how common people believe corruption is in government and business.",
+            "source": "From WHR 2024 dataset. Based on Gallup survey questions on perceived corruption."
         }
     }
 
@@ -147,12 +147,7 @@ This score is not random. It correlates strongly with several measurable indicat
     st.markdown(f"**What it means:** {selected['desc']}")
     st.markdown(f"<span style='font-size: 0.9em; color: gray;'>{selected['source']}</span>", unsafe_allow_html=True)
 
-    st.subheader("📂 Where the Data Comes From")
-    st.markdown("""
-All data shown here is based on the official World Happiness Report datasets.  
-To explore the full data or download it yourself, visit:  
-👉 [**worldhappiness.report/data-sharing**](https://worldhappiness.report/data-sharing/)
-""")
+
 # ---------- TAB 1 ----------
 with tabs[1]:
     with stylable_container("map", css_styles="padding: 1rem; background-color:#eef6ff; border-radius:8px"):
@@ -290,3 +285,11 @@ with tabs[3]:
     with stylable_container("Conclusions", css_styles="padding: 1rem; background-color:#f0f4f8; border-radius:8px"):
         st.header("📌 Conclusions")
         st.write("Tobefilled.")
+
+        
+    st.subheader("📂 Where the Data Comes From")
+    st.markdown("""
+    All data shown here is based on the official World Happiness Report datasets.  
+    To explore the full data or download it yourself, visit:  
+    👉 [**worldhappiness.report/data-sharing**](https://worldhappiness.report/data-sharing/)
+    """)
