@@ -34,50 +34,39 @@ header, footer, .css-18ni7ap.e8zbici2 {
 
 # ---------- BACKGROUND ----------
 def set_background():
-    st.markdown("""
-    <style>
-    html, body, .stApp {
-        background-color: white;
-        background-image: url("https://www.loopnews.com/wp-content/uploads/2024/03/istock-happy-sad_a278859f233bb569042db30cffe4f8ab-4.jpg");
-        background-size: cover;
-        background-attachment: fixed;
-        background-repeat: no-repeat;
-        background-position: center top;
-        color: #1a1a1a;
-        color-scheme: light !important;
-    }
-
-    .stApp::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(255, 255, 255, 0.85);
-        z-index: 0;
-    }
-
-    [data-testid="stAppViewContainer"] {
-        position: relative;
-        z-index: 1;
-    }
-
-    .block-container {
-        position: relative;
-        z-index: 2;
-        background-color: transparent;
-        padding: 2rem 1rem;
-    }
-
-    section.main > div {
-        padding-top: 0.5rem !important;
-        padding-bottom: 0.5rem !important;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-
+    st.markdown(
+        f"""
+        <style>
+        html, body, .stApp {{
+            color: #1a1a1a;
+        }}
+        .stApp {{
+            background-image: url("https://www.loopnews.com/wp-content/uploads/2024/03/istock-happy-sad_a278859f233bb569042db30cffe4f8ab-4.jpg");
+            background-size: cover;
+            background-attachment: fixed;
+            position: relative;
+        }}
+        .stApp::before {{
+            content: "";
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(255, 255, 255, 0.85);
+            z-index: 0;
+        }}
+        [data-testid="stAppViewContainer"] {{
+            position: relative;
+            z-index: 1;
+        }}
+        section.main > div {{
+            padding-top: 0.5rem !important;
+            padding-bottom: 0.5rem !important;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
 set_background()
 
