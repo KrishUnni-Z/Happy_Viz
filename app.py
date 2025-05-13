@@ -39,44 +39,41 @@ def set_background():
     html, body {
         height: auto !important;
         min-height: 100vh;
-        margin: 0;
-        padding: 0;
         background-color: white !important;
         color-scheme: light !important;
         color: #1a1a1a !important;
         overflow-x: hidden;
+        margin: 0;
+        padding: 0;
     }
 
     .stApp {
         background-image: url("https://www.loopnews.com/wp-content/uploads/2024/03/istock-happy-sad_a278859f233bb569042db30cffe4f8ab-4.jpg");
         background-size: cover;
-        background-attachment: scroll;
         background-repeat: no-repeat;
+        background-attachment: scroll;
         background-position: center top;
     }
 
     [data-testid="stAppViewContainer"] {
         background: transparent !important;
-        position: relative !important;
-        z-index: 1 !important;
+        overflow-y: auto !important;
         height: auto !important;
-        overflow-y: visible !important;
+        position: relative !important;
     }
 
     .block-container {
-        position: relative;
-        z-index: 2;
         background-color: rgba(255, 255, 255, 0.88) !important;
         padding: 2rem 1rem;
-        border-radius: 0;
+        z-index: 1;
     }
 
-    /* Disable any old overlay */
     .stApp::before {
         content: none !important;
     }
     </style>
     """, unsafe_allow_html=True)
+
 
 
 set_background()
