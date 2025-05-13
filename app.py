@@ -36,39 +36,91 @@ header, footer, .css-18ni7ap.e8zbici2 {
 def set_background():
     st.markdown("""
     <style>
-    html, body {
+    html, body, .stApp {
+        background-color: white;
         background-image: url("https://www.loopnews.com/wp-content/uploads/2024/03/istock-happy-sad_a278859f233bb569042db30cffe4f8ab-4.jpg");
         background-size: cover;
+        background-attachment: fixed;
         background-repeat: no-repeat;
         background-position: center top;
-        background-attachment: scroll;
-        background-color: white !important;
+        color: #1a1a1a;
         color-scheme: light !important;
-        overflow-x: hidden;
-        min-height: 100vh;
     }
 
-    .stApp {
-        background: transparent !important;
-    }
-
-    .block-container {
+    .stApp::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
         background-color: rgba(255, 255, 255, 0.85);
-        padding: 2rem 1rem;
-        z-index: 1;
-        position: relative;
+        z-index: 0;
     }
 
     [data-testid="stAppViewContainer"] {
-        height: auto !important;
-        overflow: auto !important;
         position: relative;
-        background: transparent !important;
+        z-index: 1;
+    }
+
+    .block-container {
+        position: relative;
+        z-index: 2;
+        background-color: transparent;
+        padding: 2rem 1rem;
+    }
+
+    section.main > div {
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
     }
     </style>
     """, unsafe_allow_html=True)
 
+
 set_background()
+
+def set_viewport_alerts():
+    st.markdown("""
+    <script>
+    function showPopup(message) {
+        const existing = document.getElementById("custom-popup");
+        if (existing) return;
+
+        const div = document.createElement("div");
+        div.id = "custom-popup";
+        div.innerHTML = message;
+        div.style.position = "fixed";
+        div.style.top = "20px";
+        div.style.right = "20px";
+        div.style.padding = "12px 18px";
+        div.style.backgroundColor = "#fff3cd";
+        div.style.color = "#664d03";
+        div.style.border = "1px solid #ffeeba";
+        div.style.borderRadius = "8px";
+        div.style.boxShadow = "0 2px 6px rgba(0,0,0,0.1)";
+        div.style.zIndex = "9999";
+        div.style.maxWidth = "300px";
+        div.style.fontSize = "14px";
+        document.body.appendChild(div);
+
+        setTimeout(() => { div.remove(); }, 10000);
+    }
+
+    window.addEventListener("load", () => {
+        const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+
+        if (isDarkMode) {
+            showPopup("🔆 You’re in dark mode. For best results, click the ⋮ in the top-right → Settings → Theme → Light.");
+        }
+        if (isPortrait) {
+            showPopup("📱 Rotate your phone sideways (landscape) for a better viewing experience.");
+        }
+    });
+    </script>
+    """, unsafe_allow_html=True)
+
 
 # ---------- LOAD DATA ----------
 @st.cache_data
