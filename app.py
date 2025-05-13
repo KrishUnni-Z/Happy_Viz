@@ -82,9 +82,18 @@ tabs = st.tabs([
 with tabs[0]:
     with stylable_container("story-intro", css_styles="padding: 1rem; background-color:#f0f4f8; border-radius:8px"):
         st.header("📋 How is Happiness Measured?")
-        st.markdown("""The **World Happiness Report** collects data from respondents in over **160 countries and territories**, covering more than **98% of the world’s adult population**.
-
-        The **happiness scores** (`ladder`) are central values with upper and lower bounds, calculated from several key factors:""")
+        
+        st.markdown("""
+        The **World Happiness Report** is based on answers from people in over **160 countries and territories**, covering more than **98% of the world’s adult population**.
+        
+        To measure happiness, people are asked to imagine a ladder with steps numbered from 0 to 10. The top of the ladder represents the best possible life for them, and the bottom represents the worst. Then they are asked:
+        
+        > *"On which step of the ladder would you say you personally feel you stand at this time?"*
+        
+        Their average response becomes the country’s **happiness score**.
+        
+        This score is shaped by several important factors such as income, health, freedom, generosity, and social support. Each one helps explain why some countries are happier than others.
+        """)
 
         st.subheader("📊 What Makes a Country Happy?")
 
