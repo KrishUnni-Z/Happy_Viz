@@ -86,53 +86,61 @@ with tabs[0]:
 
         The **happiness scores** (`ladder`) are central values with upper and lower bounds, calculated from several key factors:""")
 
-        st.subheader("📊 Key Factors That Shape Happiness")
+        st.subheader("📊 What Makes a Country Happy?")
 
-st.markdown("Click below to learn how each factor contributes to a country’s happiness score.")
+st.markdown("Each country’s happiness score is built from a mix of social, economic, and emotional factors. Tap below to explore what each one really means:")
 
+# Friendly and styled descriptions
 metrics_info = {
     "Rank": {
-        "desc": "Shows a country's position on the global happiness scale. A lower rank means higher happiness.",
-        "source": "Calculated using key indicators from the Gallup World Poll and external datasets.",
+        "emoji": "🏆",
+        "desc": "This is where a country stands on the global happiness list. The lower the rank, the happier the nation overall.",
+        "source": "Source: Gallup World Poll & WHR analysis",
     },
     "Log GDP per capita": {
-        "desc": "Represents the income level in each country, adjusted for cost of living and population size.",
-        "source": "World Bank WDI (2024), OECD & World Bank forecasts.",
+        "emoji": "💰",
+        "desc": "A fair comparison of income across countries — adjusted for prices and population size. It reflects general living standards.",
+        "source": "Source: World Bank WDI, OECD & World Bank (2024 forecasts)",
     },
     "Social support": {
-        "desc": "Measures how many people have someone to rely on during tough times — like family or close friends.",
-        "source": "Gallup World Poll (2024)",
+        "emoji": "🤝",
+        "desc": "Measures how many people feel they have someone they can count on in tough times — like a close friend or family member.",
+        "source": "Source: Gallup World Poll (2024)",
     },
     "Healthy life expectancy": {
-        "desc": "Estimates how many years people live in good health, not just total lifespan.",
-        "source": "WHO Global Health Observatory, WDI, and Lancet estimates.",
+        "emoji": "❤️",
+        "desc": "Estimates how long people live in good health — not just how long they live.",
+        "source": "Source: WHO GHO, WDI, and Lancet global estimates",
     },
     "Freedom to make life choices": {
-        "desc": "Captures whether people feel free to live the life they want.",
-        "source": "Gallup World Poll (2024)",
+        "emoji": "🕊️",
+        "desc": "Reflects whether people feel free to choose the life they want — and feel satisfied doing so.",
+        "source": "Source: Gallup World Poll (2024)",
     },
     "Generosity": {
-        "desc": "Based on whether people recently donated to charity — adjusted for income differences.",
-        "source": "Gallup World Poll + regression correction",
+        "emoji": "🎁",
+        "desc": "Looks at how many people recently donated to charity — adjusted to be fair across different income levels.",
+        "source": "Source: Gallup World Poll + statistical regression",
     },
     "Perceptions of corruption": {
-        "desc": "Reflects how much people think government and business corruption is widespread.",
-        "source": "Gallup World Poll (2024)",
+        "emoji": "🚨",
+        "desc": "Shows how widespread people think corruption is in their government or local businesses. Lower is better.",
+        "source": "Source: Gallup World Poll (2024)",
     }
 }
 
 for metric, info in metrics_info.items():
-    with st.expander(f"🔎 {metric}"):
-        st.markdown(f"<b>What it means:</b><br>{info['desc']}", unsafe_allow_html=True)
-        st.markdown(f"<b>Data Source:</b> {info['source']}", unsafe_allow_html=True)
+    with st.expander(f"{info['emoji']} {metric}"):
+        st.markdown(f"**What it means:** {info['desc']}")
+        st.markdown(f"<span style='font-size: 0.9em; color: gray;'>{info['source']}</span>", unsafe_allow_html=True)
 
-# Add official data link (only)
-st.subheader("📂 Official Data Access")
+# Data source footer
+st.subheader("📂 Where the Data Comes From")
 
 st.markdown("""
-The dataset used in this dashboard is published and maintained by the World Happiness Report team.  
-For full access, licensing terms, and downloads, visit:  
-👉 [worldhappiness.report/data-sharing](https://worldhappiness.report/data-sharing/)
+All data shown here is based on the official World Happiness Report datasets.  
+To explore the full data or download it yourself, visit:  
+👉 [**worldhappiness.report/data-sharing**](https://worldhappiness.report/data-sharing/)
 """)
 
 
