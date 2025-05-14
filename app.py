@@ -401,19 +401,25 @@ with tabs[3]:
         cols = st.columns(5)
         
         with cols[0]:
-            st.image("team/shared image.jpeg", caption="Krishnan Unni Prasad\nProject Manager", use_column_width=True)
+            st.image("team/Unni.png.jpg", use_column_width=True)
+            st.markdown("<div style='text-align:center'><b>Krishnan Unni Prasad</b><br>Project Manager</div>", unsafe_allow_html=True)
         
         with cols[1]:
-            st.image("team/shared image (1).png", caption="Aryan Bansal\nData Engineer", use_column_width=True)
+            st.image("team/Aryan.jpg", use_column_width=True)
+            st.markdown("<div style='text-align:center'><b>Aryan Bansal</b><br>Data Engineer</div>", unsafe_allow_html=True)
         
         with cols[2]:
-            st.image("team/Image.jpeg", caption="Ting Chen\nVisualisation Designer", use_column_width=True)
+            st.image("team/Ting.jpg", use_column_width=True)
+            st.markdown("<div style='text-align:center'><b>Ting Chen</b><br>Visualisation Designer</div>", unsafe_allow_html=True)
         
         with cols[3]:
-            st.image("team/gowtham.jpg", caption="Gowtham K. Prasanna\nData Analyst", use_column_width=True)
+            st.image("team/Gowtham.jpg", use_column_width=True)
+            st.markdown("<div style='text-align:center'><b>Gowtham K. Prasanna</b><br>Data Analyst</div>", unsafe_allow_html=True)
         
         with cols[4]:
-            st.image("team/Image (3).jpeg", caption="Dinh Hung Nguyen\nAudience Specialist", use_column_width=True)
+            st.image("team/Dihn.jpg", use_column_width=True)
+            st.markdown("<div style='text-align:center'><b>Dinh Hung Nguyen</b><br>Audience Experience Specialist</div>", unsafe_allow_html=True)
+
 
 
         st.caption("Built for DVN Assignment 3 – UTS, 2025")
