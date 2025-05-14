@@ -379,11 +379,11 @@ with tabs[3]:
 
         st.header("🔍 Reflections on Happiness")
         st.markdown("""
-        The happiest countries in the world share more than just wealth — they also offer freedom, health, and strong social bonds.
+        The happiest countries in the world share more than just wealth, they also offer freedom, health, and strong social bonds.
 
         This explorer helps reveal how different factors contribute to well-being, and how their impact varies across the globe.
 
-        Happiness, it turns out, isn’t just felt — it’s shaped by real conditions we can measure, compare, and improve.
+        Happiness, it turns out, isn’t just felt, it’s shaped by real conditions we can measure, compare, and improve.
         """)
 
         st.header("🔗 Where the Data Comes From")
