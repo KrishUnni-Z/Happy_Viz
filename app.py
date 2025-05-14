@@ -369,13 +369,41 @@ with tabs[2]:
 # ---------- TAB 3 ----------
 with tabs[3]:
     with stylable_container("Conclusions", css_styles="padding: 1rem; background-color:#f0f4f8; border-radius:8px"):
-        st.header("📌 Conclusions")
-        st.write("Tobefilled.")
+        st.header("📌 What This Explorer Shows")
 
-        
-    st.subheader("📂 Where the Data Comes From")
-    st.markdown("""
-    All data shown here is based on the official World Happiness Report datasets.  
-    To explore the full data or download it yourself, visit:  
-    👉 [**worldhappiness.report/data-sharing**](https://worldhappiness.report/data-sharing/)
-    """)
+        st.markdown("""
+        This dashboard brings together six years of data to explore how different countries score on happiness and what contributes to it.
+
+        Rather than focusing only on income, it highlights how **freedom**, **trust**, **health**, and **social support** affect how people experience their lives.
+        """)
+
+        st.header("🔍 Reflections on Happiness")
+        st.markdown("""
+        The happiest countries in the world share more than just wealth — they also offer freedom, health, and strong social bonds.
+
+        This explorer helps reveal how different factors contribute to well-being, and how their impact varies across the globe.
+
+        Happiness, it turns out, isn’t just felt — it’s shaped by real conditions we can measure, compare, and improve.
+        """)
+
+        st.header("🔗 Where the Data Comes From")
+        st.markdown("""
+        This dashboard is powered by the official [**World Happiness Report 2025**](https://worldhappiness.report/data-sharing/), which brings together data from:
+        - Gallup World Poll  
+        - WHO (Healthy Life Expectancy)  
+        - World Bank (GDP, social indicators)  
+        - Penn World Table & OECD
+
+        The core dataset used in this app was compiled and cleaned by the team using the official release.
+        """)
+
+        st.header("👥 Team Members & Roles")
+        st.markdown("""
+        - **Krishnan Unni Prasad** – Project Manager  
+        - **Aryan Bansal** – Data Engineer  
+        - **Ting Chen** – Visualisation Designer  
+        - **Gowtham Kamasamudra Prasanna** – Data Analyst  
+        - **Dinh Hung Nguyen** – Audience Experience Specialist
+        """)
+
+        st.caption("Built for DVN Assignment 3 – UTS, 2025")
