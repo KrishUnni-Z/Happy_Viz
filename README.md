@@ -4,7 +4,6 @@
 **Course:** Data Visualisation and Narratives – UTS 2025  
 **Team:** 3  
 **Repo:** GitHub-hosted Streamlit deployment  
-**Total Commits:** 190+  
 **Data Period:** 2019–2024 (cleaned)
 
 ---
